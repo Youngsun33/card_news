@@ -1,0 +1,49 @@
+.card-wrapper {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-top: 3rem; /* Move the cards down */
+    position: relative; /* Ensure it doesn't overlap other elements */
+}
+.card-left {
+    position: absolute;
+    left: 17rem;
+    z-index: 1;
+}
+
+.card-right {
+    position: absolute;
+    right: 17rem;
+    z-index: 1;
+}
+
+.card-center {
+    position: relative;
+    z-index: 2;
+    transform: scale(1.1); /* Increase the size of the center card */
+}
+
+.translate-btn {
+    padding: 0.6rem 2rem;
+    background: linear-gradient(90deg, #1E3A8A 60%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(30,58,138,0.08);
+    transition: background 0.2s, transform 0.1s;
+    margin-bottom: 0.2rem;
+    display: inline-block;
+}
+.translate-btn:disabled {
+    background: #bdbdbd;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.translate-btn:hover:not(:disabled) {
+    background: linear-gradient(90deg, #2563eb 60%, #1E3A8A 100%);
+    transform: translateY(-2px) scale(1.04);
+}

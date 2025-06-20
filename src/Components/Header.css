@@ -1,0 +1,38 @@
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1E3A8A;
+    height: 7rem; /* 헤더 높이 고정 */
+}
+
+h1 {
+    margin: 0;
+    color: white;
+    font-size: 3.5rem;
+    font-style: italic;
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: 1;
+    
+}
+
+.weather {
+    position: absolute;
+    left: 2rem;   /* 헤더의 왼쪽에서 2rem 떨어짐 */
+    bottom: 1rem; /* 헤더의 아래쪽에서 1rem 위 */
+    color: white;
+    font-size: 1.1rem;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.weather img {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: contain;
+   
+    
+}
