@@ -56,6 +56,8 @@ export default function Header(){
 
        
         <h1>뉴슥-</h1>
+
+        <a href="/login" className='login'>로그인</a>
    
          
     </header>
