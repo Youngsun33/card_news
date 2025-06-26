@@ -7,7 +7,7 @@ app.use(express.json());
 
 app.post("/translate", async (req, res) => {
   const { text } = req.body;
-  const deeplKey = "f23d9128-732c-453d-9fa5-957b0474c48c:fx";
+  const deeplKey = "13419ae6-0609-41b4-a24c-65ff40d15866:fx";
 
   try {
     console.log("번역 요청:", text);
