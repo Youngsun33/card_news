@@ -8,7 +8,7 @@
     justify-content: flex-start; /* 화면 왼쪽으로 배치 */
     align-items: flex-start; /* 왼쪽 정렬 */
     margin-left: 1rem; /* 필요 시 왼쪽 여백 추가 */
-   
+    margin-top: 5rem;
 }
 
 .filter-container label {

@@ -3,7 +3,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 2rem;
-  padding: 1rem 1rem 1rem 13rem; /* 왼쪽에 sidebar 공간 확보 */
+  padding: 1rem 1rem 1rem 13rem;
 }
 
 /* 왼쪽 필터 (사이드바) */
@@ -13,8 +13,9 @@
   padding: 0 1rem;
   position: fixed;
   left: 0;
-  top: 5.5rem; /* 헤더 높이에 맞게 조정 필요 */
-  height: auto;
+  top: 5.5rem;
+  height: 50rem;
+  overflow-y: auto;
   z-index: 100;
   background: transparent;
 }
