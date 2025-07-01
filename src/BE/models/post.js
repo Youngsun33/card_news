@@ -52,13 +52,13 @@ module.exports = (Sequelize, DataTypes) =>{
             as: 'likes',
             constraints: false,
         });
-        // Bookmark 모델이 있다면 아래 주석 해제
-        // Post.hasMany(models.Bookmark, {
-        //     foreignKey: 'targetId',
-        //     sourceKey: 'id',
-        //     as: 'bookmarks',
-        //     constraints: false,
-        // });
+        // Bookmark 모델과의 관계 활성화
+        Post.hasMany(models.Bookmark, {
+            foreignKey: 'postId',
+            sourceKey: 'id',
+            as: 'bookmarks',
+            constraints: false,
+        });
     }
 
     return Post;

@@ -8,16 +8,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: post(sequelize, DataTypes), // Post 모델을 참조
-                key: "id", // Post 모델의 기본 키
+                model: "posts", // Post 모델을 테이블명 문자열로 지정
+                key: "id",
             },
         },
         parentId: {
             type: DataTypes.INTEGER,
             allowNull: true,
             references: {
-                model: "comments", // Comment 모델을 참조
-                key: "id", // Comment 모델의 기본 키
+                model: "comments", // Comment 모델을 테이블명 문자열로 지정
+                key: "id",
             },
         },
         userId: {

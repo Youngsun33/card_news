@@ -1,4 +1,4 @@
-module,exports = (Sequelize, DataTypes) => {
+module.exports = (Sequelize, DataTypes) => {
   const Chat = Sequelize.define(
     "Chat",
     {

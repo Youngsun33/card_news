@@ -1,8 +1,5 @@
-const { default: Bookmark } = require("../../Components/Bookmark");
-const { default: News } = require("../../Components/NewsCard/News");
-
 module.exports = (sequelize, DataTypes) => {
-  const news = sequelize.define(
+  const News = sequelize.define(
     "News",
     {
       title: {
@@ -17,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      desciption: {
+      description: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
@@ -41,10 +38,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER, 
         defaultValue: 0,
       },
-      Bookmarks: {
-        type: DataTypes.boolean,
-        defaultValue: 0,
-      },   
     },
     {
       tableName: "news",
@@ -53,18 +46,17 @@ module.exports = (sequelize, DataTypes) => {
     // News 모델과 다른 모델 간의 관계 설정
     News.associate = function(models) {
         News.hasMany(models.Like, {
-            foreignKey: 'targetId',
+            foreignKey: 'newsId', // targetId → newsId로 명확히
             sourceKey: 'id',
             as: 'likes',
             constraints: false,
         });
-        // Bookmark 모델이 있다면 아래 주석 해제
-        // News.hasMany(models.Bookmark, {
-        //     foreignKey: 'targetId',
-        //     sourceKey: 'id',
-        //     as: 'bookmarks',
-        //     constraints: false,
-        // });
+        News.hasMany(models.Bookmark, {
+            foreignKey: 'newsId',
+            sourceKey: 'id',
+            as: 'bookmarks',
+            constraints: false,
+        });
     }
-    return news;
+    return News;
 };
