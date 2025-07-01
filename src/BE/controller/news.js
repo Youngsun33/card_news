@@ -8,9 +8,15 @@ const createNews = async (req, res) => {
       return res.status(400).json({ message: "저장할 뉴스 데이터가 없습니다." });
     }
 
-    // News 모델에 일괄 저장
+    let duplicateCount = 0;
     const createdNews = await Promise.all(
       newsArray.map(async (news) => {
+        // url 중복 체크
+        const exists = await models.News.findOne({ where: { url: news.url } });
+        if (exists) {
+          duplicateCount++;
+          return null; // 중복이면 저장하지 않음
+        }
         return await models.News.create({
           title: news.title,
           author: news.author || "unknown",
@@ -24,7 +30,13 @@ const createNews = async (req, res) => {
       })
     );
 
-    res.status(201).json({ message: "뉴스 저장 완료", data: createdNews });
+    // null(중복) 제거
+    const filteredNews = createdNews.filter((item) => item !== null);
+
+    res.status(201).json({ 
+      message: `뉴스 저장 완료 (중복: ${duplicateCount}건 제외)`, 
+      data: filteredNews 
+    });
   } catch (error) {
     console.error("뉴스 저장 오류:", error);
     res.status(500).json({ message: "서버 오류", error: error.message });
