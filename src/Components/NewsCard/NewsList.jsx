@@ -66,14 +66,13 @@ export default function NewsList({ articles, onTranslateToggle, isLoading, trans
             
             <div className="card-wrapper">
                 <div className="card-left">
-                    {showLeft && (
-                        <div onClick={() => setCurrentIndex(currentIndex - 1)}>
-                            <News 
-                            article={articles[currentIndex - 1]}  
-                            like={likes[currentIndex-1]} 
-                            onLike={()=>{handleLike(currentIndex-1)}}
-                            onBookmark={()=>{handleBookmark(currentIndex-1)}}
-                            Bookmarked={bookmarked[currentIndex - 1]}/>
+                    {showRight && (
+                        <div onClick={() => setCurrentIndex(currentIndex + 1)}>
+                            <News article={articles[currentIndex + 1]}  
+                            like={likes[currentIndex+1]} 
+                            onLike={()=> handleLike(currentIndex + 1)}
+                            onBookmark={()=>{handleBookmark(currentIndex+1)}}
+                            Bookmarked={bookmarked[currentIndex + 1]}/>
                         </div>
                     )}
                 </div>
@@ -87,13 +86,14 @@ export default function NewsList({ articles, onTranslateToggle, isLoading, trans
                 </div>
 
                 <div className="card-right">
-                    {showRight && (
-                        <div onClick={() => setCurrentIndex(currentIndex + 1)}>
-                            <News article={articles[currentIndex + 1]}  
-                            like={likes[currentIndex+1]} 
-                            onLike={()=> handleLike(currentIndex + 1)}
-                            onBookmark={()=>{handleBookmark(currentIndex+1)}}
-                            Bookmarked={bookmarked[currentIndex + 1]}/>
+                    {showLeft && (
+                        <div onClick={() => setCurrentIndex(currentIndex - 1)}>
+                            <News 
+                            article={articles[currentIndex - 1]}  
+                            like={likes[currentIndex-1]} 
+                            onLike={()=>{handleLike(currentIndex-1)}}
+                            onBookmark={()=>{handleBookmark(currentIndex-1)}}
+                            Bookmarked={bookmarked[currentIndex - 1]}/>
                         </div>
                     )}
                 </div>
