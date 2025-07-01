@@ -1,0 +1,62 @@
+.board-preview {
+  width: 320px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.5rem 1rem;
+  margin-left: 2rem;
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.board-header h3 {
+  font-size: 1.2rem;
+  color: #1E3A8A;
+  margin: 0;
+}
+.more-btn {
+  background: #1E3A8A;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.more-btn:hover {
+  background: #16306b;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.preview-item {
+  padding: 0.7rem 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.preview-item:last-child {
+  border-bottom: none;
+}
+.preview-item strong {
+  display: block;
+  color: #222;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+.preview-item p {
+  color: #666;
+  font-size: 0.92rem;
+  margin: 0;
+}
+.preview-item:hover {
+  background: #f5f8ff;
+}
