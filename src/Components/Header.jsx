@@ -1,5 +1,6 @@
 import './Header.css'
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 export default function Header(){
@@ -56,8 +57,7 @@ export default function Header(){
 
        
         <h1>뉴슥-</h1>
-
-        <a href="/login" className='login'>로그인</a>
+        <Link to="/auth" className='login'>로그인</Link>
    
          
     </header>

@@ -1,10 +1,10 @@
 import './App.css';
-import MainPage from './Components/common/MainPage';
+import AppRouter from './Components/AppRouter';
 
 function App() {
   return (
     <div className="App">
-     <MainPage></MainPage>
+      <AppRouter />
     </div>
   );
 }
