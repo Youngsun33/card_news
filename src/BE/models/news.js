@@ -52,21 +52,19 @@ module.exports = (sequelize, DataTypes) => {
   );
     // News 모델과 다른 모델 간의 관계 설정
     News.associate = function(models) {
-        News.belongsTo(models.User, {
-            foreignKey: 'authorId',
-            targetKey: 'userId',    
-            as: 'author',
-        });
         News.hasMany(models.Like, {
-            foreignKey: 'newsId',
+            foreignKey: 'targetId',
             sourceKey: 'id',
             as: 'likes',
+            constraints: false,
         });
-        News.hasMany(models.Bookmark, {
-            foreignKey: 'newsId',
-            sourceKey: 'id',
-            as: 'bookmarks',
-        });
+        // Bookmark 모델이 있다면 아래 주석 해제
+        // News.hasMany(models.Bookmark, {
+        //     foreignKey: 'targetId',
+        //     sourceKey: 'id',
+        //     as: 'bookmarks',
+        //     constraints: false,
+        // });
     }
     return news;
 };

@@ -39,22 +39,17 @@ module.exports = (sequelize, DataTypes) => {
             sourceKey: 'userId',
             as: 'comments',
         });
-        User.hasMany(models.Bookmark, {
-            foreignKey: 'userId',
-            sourceKey: 'userId',
-            as: 'bookmarks',
-        });
-        User.hasMany(models.Chat, {
-            foreignKey: 'userId',
-            sourceKey: 'userId',
-            as: 'chats',
-        });
         User.hasMany(models.Like, {
             foreignKey: 'userId',
             sourceKey: 'userId',
             as: 'likes',
         });
-        
+        // Bookmark 모델이 있다면 아래 주석 해제
+        // User.hasMany(models.Bookmark, {
+        //     foreignKey: 'userId',
+        //     sourceKey: 'userId',
+        //     as: 'bookmarks',
+        // });
     };
 
     return User;

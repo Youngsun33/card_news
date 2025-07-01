@@ -35,23 +35,30 @@ module.exports = (Sequelize, DataTypes) =>{
         }
     );
     // Post 모델과 다른 모델 간의 관계 설정
-    post.associate = function(models){
-        post.belongsTo(models.User, {
+    Post.associate = function(models){
+        Post.belongsTo(models.User, {
             foreignKey: 'authorId',
             targetKey: 'userId',
             as: 'author',
         });
-        post.hasMany(models.Comment, {
+        Post.hasMany(models.Comment, {
             foreignKey: 'postId',
             sourceKey: 'id',
             as: 'comments',
         });
-        post.hasMany(models.Like, {
-            foreignKey: 'postId',
+        Post.hasMany(models.Like, {
+            foreignKey: 'targetId',
             sourceKey: 'id',
             as: 'likes',
+            constraints: false,
         });
-
+        // Bookmark 모델이 있다면 아래 주석 해제
+        // Post.hasMany(models.Bookmark, {
+        //     foreignKey: 'targetId',
+        //     sourceKey: 'id',
+        //     as: 'bookmarks',
+        //     constraints: false,
+        // });
     }
 
     return Post;

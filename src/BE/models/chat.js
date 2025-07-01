@@ -19,21 +19,7 @@ module,exports = (Sequelize, DataTypes) => {
     // Chat 모델과 다른 모델 간의 관계 설정
     // 예: Chat.belongsTo(User, { foreignKey: 'userId' });
     Chat.associate = function(models) {
-        Chat.belongsTo(models.User, {
-            foreignKey: 'userId',
-            targetKey: 'userId',
-            as: 'user',
-        });
-        Chat.hasMany(models.ChatMessage, {
-            foreignKey: 'chatId',
-            sourceKey: 'id',
-            as: 'messages',
-        });
-        Chat.hasMany(models.ChatParticipant, {
-            foreignKey: 'chatId',
-            sourceKey: 'id',
-            as: 'participants',
-        });
+        // Chat은 익명, 관계 없음
     }
 
     return Chat;

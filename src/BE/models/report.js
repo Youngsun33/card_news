@@ -32,10 +32,23 @@ const Report = sequelize.define(
     Report.associate = function(models) {
         Report.belongsTo(models.User, {
             foreignKey: 'userId',
-            targetKey: 'id',
             as: 'reporter',
         });
-        // 다른 모델과의 관계 설정이 필요할 경우 여기에 추가
+        Report.belongsTo(models.Post, {
+            foreignKey: 'targetId',
+            constraints: false,
+            as: 'post',
+        });
+        Report.belongsTo(models.News, {
+            foreignKey: 'targetId',
+            constraints: false,
+            as: 'news',
+        });
+        Report.belongsTo(models.Chat, {
+            foreignKey: 'targetId',
+            constraints: false,
+            as: 'chat',
+        });
     }
     return Report;
 

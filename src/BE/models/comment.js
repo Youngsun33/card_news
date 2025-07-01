@@ -55,11 +55,12 @@ module.exports = (sequelize, DataTypes) => {
             as: 'author',
         });
         Comment.hasMany(models.Like, {
-            foreignKey: 'commentId',
+            foreignKey: 'targetId',
             sourceKey: 'id',
             as: 'likes',
+            constraints: false,
         });
     };
     return Comment;
     
-};  
+};
