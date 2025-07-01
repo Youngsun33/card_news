@@ -12,6 +12,7 @@ require("dotenv").config(); // .env 파일 사용
 const models = require("./models");
 const app = express();
 const { logger, logging } = require("./middlewares/logger");
+const newsRouter = require("./routers/news");
 
 // 미들웨어 설정
 app.use(logging); // 로깅 미들웨어
@@ -63,6 +64,7 @@ app.post("/translate", async (req, res) => {
 // app.use("/posts", postRouter);
 // app.use("/users", userRouter);
 // app.use("/auth", authRouter);
+app.use("/api/news", newsRouter);
 
 // 404 처리
 app.use((req, res) => {

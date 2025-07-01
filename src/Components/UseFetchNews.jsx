@@ -81,7 +81,22 @@ export default function UseFetchNews() {
         setTranslated(prev => ({ ...prev, [index]: true }));
     };
 
-    
+    useEffect(() => {
+        if (articles.length > 0) {
+            fetch('http://localhost:5000/api/news', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ articles }),
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('뉴스 DB 저장 결과:', data);
+            })
+            .catch(err => {
+                console.error('뉴스 DB 저장 실패:', err);
+            });
+        }
+    }, [articles]);
 
   
     return (
