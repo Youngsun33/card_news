@@ -38,20 +38,22 @@ export default function AuthPage() {
               </div>
               <div className="input-group">
                 <i className="bx bx-mail-send"></i>
-                <input type="email" placeholder="Email" />
+                <input type="email" placeholder="Password" />
               </div>
               <div className="input-group">
                 <i className="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Password" />
+                <input type="password" placeholder="name" />
               </div>
               <div className="input-group">
                 <i className="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Confirm password" />
+                <input type="password" placeholder="nickname" />
               </div>
               <button>Sign up</button>
               <p>
                 <span>Already have an account?</span>
-                <b onClick={toggle} className="pointer">Sign in here</b>
+                <b onClick={toggle} className="pointer">
+                  Sign in here
+                </b>
               </p>
             </div>
           </div>
@@ -75,7 +77,9 @@ export default function AuthPage() {
               </p>
               <p>
                 <span>Don't have an account?</span>
-                <b onClick={toggle} className="pointer">Sign up here</b>
+                <b onClick={toggle} className="pointer">
+                  Sign up here
+                </b>
               </p>
             </div>
           </div>

@@ -2,9 +2,8 @@ const { func } = require("joi");
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User", 
+    "User",
     {
-     
       userId: {
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -22,35 +21,41 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
-      //category : 
+      //category :
     },
     {
-      tableName : "users",
+      tableName: "users",
+    }
+  );
+  // User 모델과 다른 모델 간의 관계 설정
+  User.associate = function (models) {
+    User.hasMany(models.Post, {
+      foreignKey: "authorId",
+      sourceKey: "userId",
+      as: "posts",
     });
-    // User 모델과 다른 모델 간의 관계 설정
-    User.associate = function(models) {
-        User.hasMany(models.Post, {
-            foreignKey: 'authorId',
-            sourceKey: 'userId',
-            as: 'posts',
-        });
-        User.hasMany(models.Comment, {
-            foreignKey: 'userId',
-            sourceKey: 'userId',
-            as: 'comments',
-        });
-        User.hasMany(models.Like, {
-            foreignKey: 'userId',
-            sourceKey: 'userId',
-            as: 'likes',
-        });
-        // Bookmark 모델이 있다면 아래 주석 해제
-        // User.hasMany(models.Bookmark, {
-        //     foreignKey: 'userId',
-        //     sourceKey: 'userId',
-        //     as: 'bookmarks',
-        // });
-    };
+    User.hasMany(models.Post, {
+      foreignKey: "authorNickname",
+      sourceKey: "nickname",
+      as: "postsNick",
+    });
+    User.hasMany(models.Comment, {
+      foreignKey: "userId",
+      sourceKey: "userId",
+      as: "comments",
+    });
+    User.hasMany(models.Like, {
+      foreignKey: "userId",
+      sourceKey: "userId",
+      as: "likes",
+    });
 
-    return User;
+    User.hasMany(models.Bookmark, {
+      foreignKey: "userId",
+      sourceKey: "userId",
+      as: "bookmarks",
+    });
+  };
+
+  return User;
 };

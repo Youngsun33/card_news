@@ -6,9 +6,9 @@ require("dotenv").config(); // .env 파일 사용
 // 라우터 임포트 (실제 라우터 파일명에 맞게 수정 필요)
 // const noteRouter = require("./routes/notes");
 // const todoRouter = require("./routes/todos");
-// const postRouter = require("./routes/posts");
-// const userRouter = require("./routes/users");
-// const authRouter = require("./routes/auth");
+const postRouter = require("./routers/posts");
+const userRouter = require("./routers/users");
+// const authRouter = require("./routers/auth");
 const models = require("./models");
 const app = express();
 const { logger, logging } = require("./middlewares/logger");
@@ -61,8 +61,8 @@ app.post("/translate", async (req, res) => {
 // 실제 라우터 연결 (주석 해제 및 파일명 맞게 수정 필요)
 // app.use("/notes", noteRouter);
 // app.use("/todos", todoRouter);
-// app.use("/posts", postRouter);
-// app.use("/users", userRouter);
+app.use("/posts", postRouter);
+app.use("/users", userRouter);
 // app.use("/auth", authRouter);
 app.use("/api/news", newsRouter);
 
