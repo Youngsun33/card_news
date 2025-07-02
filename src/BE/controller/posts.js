@@ -2,9 +2,13 @@ const models = require("../models");
 
 const createPost = async (req, res) => {
   const { title, content } = req.body;
+  const authorId = req.user.userId;
+  const authorNickname = req.user.nickname;
   const post = await models.Post.create({
     title: title,
     content: content,
+    authorId: authorId,
+    authorNickname: authorNickname,
   });
   res.status(200).json({ message: "ok", data: post });
 };

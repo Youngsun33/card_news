@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const postsController = require("../controller/posts");
+const { authenticate } = require("../middlewares/auth");
 
-router.post("/", postsController.createPost);
+router.post("/", authenticate, postsController.createPost);
 router.get("/", postsController.getPostAll);
 router.get("/:id", postsController.getOnePost);
-router.put("/:id", postsController.updatePost);
+router.put("/:id", authenticate, postsController.updatePost);
 router.delete("/:id", postsController.deletePost);
 
 router.post("/:postId/comments", postsController.createComment);
