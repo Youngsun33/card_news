@@ -43,6 +43,21 @@ const createNews = async (req, res) => {
   }
 };
 
+// 뉴스 상세 조회
+const getOneNews = async (req, res) => {
+  const id = req.params.id;
+  const news = await models.News.findByPk(id);
+  if (!news) return res.status(404).json({ message: "news not found" });
+
+  let likedByMe = false;
+  if (req.user) {
+    const like = await models.Like.findOne({ where: { newsId: id, userId: req.user.userId } });
+    likedByMe = !!like;
+  }
+  res.status(200).json({ message: "ok", data: { ...news.toJSON(), likedByMe } });
+};
+
 module.exports = {
   createNews,
+  getOneNews,
 };

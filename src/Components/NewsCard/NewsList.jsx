@@ -1,6 +1,6 @@
 import { useState } from "react";
-import News from "./News"
-import './NewsList.css'
+import News from "./News";
+import './NewsList.css';
 
 export default function NewsList({ articles, onTranslateToggle, isLoading, translated }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,7 +31,7 @@ export default function NewsList({ articles, onTranslateToggle, isLoading, trans
         description: isTranslated && currentArticle.description_ko ? currentArticle.description_ko : currentArticle.description
     };
 
-    //좋아요 기능
+    //좋아요 기능(프론트 상태만)
     const handleLike= (index)=>{
         setLikes(prevLike=>{
             const newLike = [...prevLike];
@@ -40,10 +40,9 @@ export default function NewsList({ articles, onTranslateToggle, isLoading, trans
             }
             return newLike;
         });
-
     };
 
-     const handleBookmark = (index)=>{
+    const handleBookmark = (index)=>{
         setBookmarked(prevBookmark =>{
             const newBookmark = [...prevBookmark];
             if(typeof index === 'number' && index >= 0){
@@ -51,8 +50,7 @@ export default function NewsList({ articles, onTranslateToggle, isLoading, trans
             }
             return newBookmark;
         });
-
-     }
+    }
 
     return (
         <div>

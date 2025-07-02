@@ -1,6 +1,7 @@
 const models = require("../models");
 const bcrypt = require("bcryptjs");
 const { generateAccessToken } = require("../utlis/token");
+const { authenticate } = require("../middlewares/auth");
 
 const register = async (req, res) => {
   try {
@@ -39,7 +40,17 @@ const login = async (req, res) => {
   res.json({ message: "ok", accessToken: accessToken, user });
 };
 
+// 내 정보 조회 (토큰 필요)
+const me = [
+  authenticate,
+  async (req, res) => {
+    if (!req.user) return res.status(401).json({ message: "not authorized" });
+    res.json({ user: req.user });
+  },
+];
+
 module.exports = {
   register,
   login,
+  me,
 };

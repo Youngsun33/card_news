@@ -12,18 +12,10 @@ module.exports = (sequelize, DataTypes) => {
                 key: "id",
             },
         },
-        parentId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            references: {
-                model: "comments", // Comment 모델을 테이블명 문자열로 지정
-                key: "id",
-            },
-        },
         userId: {
             type: DataTypes.STRING(100),
             allowNull: false,
-            unique: true,
+            // unique: true, // 여러 유저가 댓글 작성 가능하도록 unique 제거
         },
         nickname: {
             type: DataTypes.STRING(50),

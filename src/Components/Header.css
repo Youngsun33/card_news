@@ -44,3 +44,21 @@ h1 {
     color: white;
     font-size: 1.1rem;
 }
+
+.logout {
+    padding: 0.1rem 0.5rem;
+    background-color: #fff !important;
+    color: #1E3A8A !important;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-left: 1rem;
+    box-shadow: 0 2px 8px rgba(30,58,138,0.08);
+    transition: background 0.2s, color 0.2s;
+}
+
+.logout:hover {
+    background-color: #f1f5fa !important;
+    color: #14306a !important;
+}

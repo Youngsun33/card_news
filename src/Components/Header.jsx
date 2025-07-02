@@ -1,6 +1,7 @@
 import './Header.css'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "./common/UserContext";
 
 
 export default function Header(){
@@ -9,6 +10,7 @@ export default function Header(){
     const appid= '284677a959ac4eda889df5de52544f3e';
     const [weather,setWeather]= useState(null);
     const [error,setError] = useState(null);
+    const { user, logout } = useContext(UserContext);
     
     useEffect(()=>{
         const fetchWeather = async()=>{
@@ -29,7 +31,7 @@ export default function Header(){
     }, []);
 
     if(error){
-        return <div>오류발생!!:{error}</div>;
+        return <div>오류발생!!:{error+""}</div>;
     }
     if(!weather){
         return <div>---날씨정보 로딩중---</div>
@@ -55,9 +57,17 @@ export default function Header(){
         }
         </div>
 
-       
-        <h1>뉴슥-</h1>
-        <Link to="/auth" className='login'>로그인</Link>
+        <h1>뉴스-</h1>
+        <div className='login'>
+          {user ? (
+            <div>
+              <span>{user.nickname}님 환영합니다!</span>
+              <button onClick={logout} className='logout'>로그아웃</button>
+            </div>
+          ) : (
+            <Link to="/auth" >로그인</Link>
+          )}
+        </div>
    
          
     </header>

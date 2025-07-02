@@ -12,7 +12,7 @@ const createPost = async (req, res) => {
     const authorId = req.user.userId;
     const authorNickname = req.user.nickname;
     if (!authorId || !authorNickname) {
-      return res.status(400).json({ message: "userId 또는 nickname이 없습니다." });
+      return res.status(400).json({ message: "ID 또는 nickname이 없습니다." });
     }
     const post = await models.Post.create({
       title,
@@ -34,25 +34,28 @@ const getPostAll = async (req, res) => {
 
 //하나만 조회
 const getOnePost = async (req, res) => {
-  const id = req.parmas.id;
+  const id = req.params.id;
   const post = await models.Post.findByPk(id);
-  if (post) {
-    res.status(200).json({ message: "ok", data: posts });
-  } else {
-    res.status(404).json({ message: "post not found" });
+  if (!post) return res.status(404).json({ message: "post not found" });
+
+  let likedByMe = false;
+  if (req.user) {
+    const like = await models.Like.findOne({ where: { postId: id, userId: req.user.userId } });
+    likedByMe = !!like;
   }
+  res.status(200).json({ message: "ok", data: { ...post.toJSON(), likedByMe } });
 };
 
 //업데이트
 const updatePost = async (req, res) => {
-  const id = req.parmas.id;
+  const id = req.params.id;
   const { title, content } = req.body;
   const post = await models.Post.findByPk(id);
   if (post) {
     if (title) post.title = title;
     if (content) post.content = content;
     await post.save();
-    res.status(200).json({ message: "ok", data: posts });
+    res.status(200).json({ message: "ok", data: post });
   } else {
     res.status(404).json({ message: "post not found" });
   }
@@ -60,7 +63,7 @@ const updatePost = async (req, res) => {
 
 //삭제
 const deletePost = async (req, res) => {
-  const id = req.parmas.id;
+  const id = req.params.id;
   const result = await models.Post.destroy(id);
   if (result > 0) {
     res.status(204).send();
@@ -70,6 +73,11 @@ const deletePost = async (req, res) => {
 };
 
 const createComment = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "인증 정보가 없습니다." });
+  }
+  // 디버깅용 로그
+  console.log('req.user:', req.user);
   const postId = req.params.postId;
   const { content } = req.body;
   // 1. 게시물이 존재여부 체크
@@ -77,12 +85,12 @@ const createComment = async (req, res) => {
   if (!post) {
     return res.status(404).json({ message: "post not found" });
   }
-
   // 2. comment 추가
   const comment = await models.Comment.create({
     content: content,
     postId: postId,
-    userId: req.user.id,
+    userId: req.user.userId,      // userId는 문자열
+    nickname: req.user.nickname,  // nickname도 저장
   });
   res.status(201).json({ message: "ok", data: comment });
 };
@@ -93,7 +101,7 @@ const findComments = async (req, res) => {
   const comments = await models.Comment.findAll({
     where: { postId: postId },
     include: [
-      { model: models.User, as: "author", attributes: ["id", "name", "email"] },
+      { model: models.User, as: "author", attributes: ["userId", "nickname", "name"] },
     ],
     order: [["createdAt", "DESC"]],
   });

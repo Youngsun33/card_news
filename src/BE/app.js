@@ -13,6 +13,7 @@ const models = require("./models");
 const app = express();
 const { logger, logging } = require("./middlewares/logger");
 const newsRouter = require("./routers/news");
+// const likesRouter = require("./routers/likes"); // 좋아요 라우터 임포트 주석 처리
 
 // 미들웨어 설정
 app.use(logging); // 로깅 미들웨어
@@ -65,6 +66,7 @@ app.use("/posts", postRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/api/news", newsRouter);
+// app.use("/api/likes", likesRouter); // 좋아요 라우터 제거(요청 전 상태로 복구)
 
 // 404 처리
 app.use((req, res) => {

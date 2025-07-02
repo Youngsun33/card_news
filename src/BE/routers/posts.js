@@ -9,7 +9,7 @@ router.get("/:id", postsController.getOnePost);
 router.put("/:id", authenticate, postsController.updatePost);
 router.delete("/:id", postsController.deletePost);
 
-router.post("/:postId/comments", postsController.createComment);
+router.post("/:postId/comments", authenticate, postsController.createComment);
 router.get("/:postId/comments", postsController.findComments);
 router.put("/:postId/comments/:id", postsController.updateComment);
 router.delete("/:postId/comments/:id", postsController.deleteComment);

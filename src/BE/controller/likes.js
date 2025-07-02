@@ -1,5 +1,1 @@
-const models = require("../models");
-
-const saveLikes = (req, res) => {
-  const likes = models.Sequelize;
-};
+// 좋아요 컨트롤러 전체 제거(좋아요 기능 요청 전에는 없었으므로 파일 전체 삭제)

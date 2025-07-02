@@ -1,5 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import "./AuthPage.css";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "./common/UserContext";
 
 export default function AuthPage() {
   const containerRef = useRef(null);
@@ -11,11 +13,12 @@ export default function AuthPage() {
     nickname: "",
   });
   const [loginData, setLoginData] = useState({ userId: "", password: "" });
-
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(null);
   const [loginLoading, setLoginLoading] = useState(false);
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,10 +75,10 @@ export default function AuthPage() {
       if (!response.ok)
         throw new Error(data.message || "로그인에 실패했습니다.");
       if (data.accessToken) {
-        localStorage.setItem("accessToken", data.accessToken);
+        login(data.user, data.accessToken); // 전역 상태 저장
+        alert("로그인 성공!");
+        navigate("/"); // 메인으로 이동
       }
-      alert("로그인 성공!");
-      // 토큰 저장 등 추가 가능
     } catch (err) {
       setLoginError(err.message);
     } finally {
