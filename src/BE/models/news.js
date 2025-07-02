@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      author : {
+      author: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
@@ -16,9 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: false,
       },
-      image : {
+      image: {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
@@ -31,11 +30,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       Kodescription: {
-            type: DataTypes.TEXT,
-            allowNull: true,
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
       likesCount: {
-        type: DataTypes.INTEGER, 
+        type: DataTypes.INTEGER,
         defaultValue: 0,
       },
     },
@@ -43,20 +42,20 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "news",
     }
   );
-    // News 모델과 다른 모델 간의 관계 설정
-    News.associate = function(models) {
-        News.hasMany(models.Like, {
-            foreignKey: 'newsId', // targetId → newsId로 명확히
-            sourceKey: 'id',
-            as: 'likes',
-            constraints: false,
-        });
-        News.hasMany(models.Bookmark, {
-            foreignKey: 'newsId',
-            sourceKey: 'id',
-            as: 'bookmarks',
-            constraints: false,
-        });
-    }
-    return News;
+  // News 모델과 다른 모델 간의 관계 설정
+  News.associate = function (models) {
+    News.hasMany(models.Like, {
+      foreignKey: "newsId", // targetId → newsId로 명확히
+      sourceKey: "id",
+      as: "likes",
+      constraints: false,
+    });
+    News.hasMany(models.Bookmark, {
+      foreignKey: "newsId",
+      sourceKey: "id",
+      as: "bookmarks",
+      constraints: false,
+    });
+  };
+  return News;
 };

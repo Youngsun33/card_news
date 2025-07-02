@@ -1,7 +1,7 @@
 const Joi = require("joi"); // 데이터 유효성 검사도구 불러오기
 
 const registerSchema = Joi.object({
-  userId: Joi.string().userId().required().messages({
+  userId: Joi.string().min(4).max(20).required().messages({
     "string.empty": "아이디는 필수 입력 항목입니다.",
   }),
   password: Joi.string().min(6).max(30).required().messages({

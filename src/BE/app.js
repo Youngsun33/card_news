@@ -8,7 +8,7 @@ require("dotenv").config(); // .env 파일 사용
 // const todoRouter = require("./routes/todos");
 const postRouter = require("./routers/posts");
 const userRouter = require("./routers/users");
-// const authRouter = require("./routers/auth");
+const authRouter = require("./routers/auth");
 const models = require("./models");
 const app = express();
 const { logger, logging } = require("./middlewares/logger");
@@ -63,7 +63,7 @@ app.post("/translate", async (req, res) => {
 // app.use("/todos", todoRouter);
 app.use("/posts", postRouter);
 app.use("/users", userRouter);
-// app.use("/auth", authRouter);
+app.use("/auth", authRouter);
 app.use("/api/news", newsRouter);
 
 // 404 처리

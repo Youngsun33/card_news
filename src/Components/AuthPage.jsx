@@ -10,9 +10,12 @@ export default function AuthPage() {
     name: "",
     nickname: "",
   });
+  const [loginData, setLoginData] = useState({ userId: "", password: "" });
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(null);
+  const [loginLoading, setLoginLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,13 +25,18 @@ export default function AuthPage() {
     }));
   };
 
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/auth", {
+      const response = await fetch("/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,6 +55,28 @@ export default function AuthPage() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLoginLoading(true);
+    setLoginError(null);
+    try {
+      const response = await fetch("/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData),
+      });
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error(data.message || "로그인에 실패했습니다.");
+      alert("로그인 성공!");
+      // 토큰 저장 등 추가 가능
+    } catch (err) {
+      setLoginError(err.message);
+    } finally {
+      setLoginLoading(false);
     }
   };
 
@@ -145,13 +175,30 @@ export default function AuthPage() {
             <div className="form sign-in">
               <div className="input-group">
                 <i className="bx bxs-user"></i>
-                <input type="text" placeholder="ID" />
+                <input
+                  type="text"
+                  name="userId"
+                  placeholder="ID"
+                  value={loginData.userId}
+                  onChange={handleLoginChange}
+                  required
+                />
               </div>
               <div className="input-group">
                 <i className="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Password" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={loginData.password}
+                  onChange={handleLoginChange}
+                  required
+                />
               </div>
-              <button>Sign in</button>
+              <button onClick={handleLoginSubmit} disabled={loginLoading}>
+                Sign in
+              </button>
+              {loginError && <p className="error">{loginError}</p>}
               <p>
                 <b>Forgot password?</b>
               </p>
