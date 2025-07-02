@@ -6,6 +6,7 @@ const authenticate = async (req, res, next) => {
   // req.headers.authorization : Beaerer eyxxxxxxxx
   if (req.headers.authorization) {
     token = req.headers.authorization.split(" ")[1];
+    console.log(req.user)
   }
   if (!token) {
     return res.status(401).json({ message: "not authorizedㅋ" });

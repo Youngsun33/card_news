@@ -17,7 +17,7 @@ module.exports = (Sequelize, DataTypes) => {
         allowNull: false,
       },
       authorNickname: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       likesCount: {

@@ -1,16 +1,29 @@
 const models = require("../models");
 
 const createPost = async (req, res) => {
-  const { title, content } = req.body;
-  const authorId = req.user.userId;
-  const authorNickname = req.user.nickname;
-  const post = await models.Post.create({
-    title: title,
-    content: content,
-    authorId: authorId,
-    authorNickname: authorNickname,
-  });
-  res.status(200).json({ message: "ok", data: post });
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "인증 정보가 없습니다." });
+    }
+    const { title, content } = req.body;
+    if (!title || !content) {
+      return res.status(400).json({ message: "title과 content는 필수입니다." });
+    }
+    const authorId = req.user.userId;
+    const authorNickname = req.user.nickname;
+    if (!authorId || !authorNickname) {
+      return res.status(400).json({ message: "userId 또는 nickname이 없습니다." });
+    }
+    const post = await models.Post.create({
+      title,
+      content,
+      authorId,
+      authorNickname,
+    });
+    res.status(200).json({ message: "ok", data: post });
+  } catch (err) {
+    res.status(500).json({ message: "server error", error: err.message });
+  }
 };
 
 //전체조회
