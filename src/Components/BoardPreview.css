@@ -1,13 +1,13 @@
 .board-preview {
-  width: 320px;
+  width: 400px;
+  height: 1000px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 1.5rem 1rem;
-  margin-left: 2rem;
+  margin-left: 0;
   position: sticky;
   top: 2rem;
-  height: fit-content;
 }
 .board-header {
   display: flex;
@@ -17,11 +17,11 @@
 }
 .board-header h3 {
   font-size: 1.2rem;
-  color: #1E3A8A;
+  color: #1e3a8a;
   margin: 0;
 }
 .more-btn {
-  background: #1E3A8A;
+  background: #1e3a8a;
   color: #fff;
   border: none;
   border-radius: 6px;

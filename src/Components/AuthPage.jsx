@@ -4,6 +4,51 @@ import "./AuthPage.css";
 export default function AuthPage() {
   const containerRef = useRef(null);
   const [mode, setMode] = useState("sign-in");
+  const [formData, setFormData] = useState({
+    userId: "",
+    password: "",
+    name: "",
+    nickname: "",
+  });
+
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "회원가입에 실패했습니다.");
+      }
+
+      alert("회원가입이 완료되었습니다. 로그인해주세요.");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (containerRef.current) {
@@ -34,21 +79,56 @@ export default function AuthPage() {
             <div className="form sign-up">
               <div className="input-group">
                 <i className="bx bxs-user"></i>
-                <input type="text" placeholder="ID" />
+                <input
+                  type="text"
+                  name="userId"
+                  placeholder="ID"
+                  value={formData.userId}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="input-group">
                 <i className="bx bx-mail-send"></i>
-                <input type="email" placeholder="Password" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="input-group">
                 <i className="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="name" />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="input-group">
                 <i className="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="nickname" />
+                <input
+                  type="text"
+                  name="nickname"
+                  placeholder="nickname"
+                  value={formData.nickname}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-              <button>Sign up</button>
+              <button
+                onClick={handleSubmit}
+                disabled={loading}
+                className="signup-btn"
+              >
+                Sign up
+              </button>
+              {error && <p className="error">{error}</p>}
               <p>
                 <span>Already have an account?</span>
                 <b onClick={toggle} className="pointer">
