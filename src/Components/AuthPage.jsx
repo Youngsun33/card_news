@@ -36,7 +36,7 @@ export default function AuthPage() {
     setError(null);
 
     try {
-      const response = await fetch("/auth/register", {
+      const response = await fetch("http://localhost:5000/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export default function AuthPage() {
     setLoginLoading(true);
     setLoginError(null);
     try {
-      const response = await fetch("/auth/login", {
+      const response = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData),
@@ -71,6 +71,9 @@ export default function AuthPage() {
       const data = await response.json();
       if (!response.ok)
         throw new Error(data.message || "로그인에 실패했습니다.");
+      if (data.accessToken) {
+        localStorage.setItem("accessToken", data.accessToken);
+      }
       alert("로그인 성공!");
       // 토큰 저장 등 추가 가능
     } catch (err) {

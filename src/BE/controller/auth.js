@@ -26,7 +26,7 @@ const login = async (req, res) => {
   });
   // 2. 사용자가 없으면 잘못된 이메일 비밀번호라고 알려줌
   if (!user) {
-    return res.status(400).json({ message: "Invalid ID and password" });
+    return res.status(400).json({ message: "Invalid ID and password1" });
   }
   // 3. 사용자가 있으면 비밀번호 비교
   const isMatch = await bcrypt.compare(password, user.password);
