@@ -5,7 +5,7 @@ require("dotenv").config(); // .env 파일 사용
 
 // 라우터 임포트 (실제 라우터 파일명에 맞게 수정 필요)
 // const noteRouter = require("./routes/notes");
-// const todoRouter = require("./routes/todos");
+const chatRouter = require("./routers/chat");
 const postRouter = require("./routers/posts");
 const userRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
@@ -66,6 +66,7 @@ app.use("/posts", postRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/api/news", newsRouter);
+app.use("/chat", chatRouter);
 // app.use("/api/likes", likesRouter); // 좋아요 라우터 제거(요청 전 상태로 복구)
 
 // 404 처리

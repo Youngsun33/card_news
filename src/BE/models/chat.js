@@ -5,7 +5,6 @@ module.exports = (Sequelize, DataTypes) => {
       userId: {
         type: DataTypes.STRING(100),
         allowNull: false,
-        unique: true,
       },
       content: {
         type: DataTypes.TEXT,
@@ -16,12 +15,15 @@ module.exports = (Sequelize, DataTypes) => {
       tableName: "chats",
     }
   );
-    // Chat 모델과 다른 모델 간의 관계 설정
-    // 예: Chat.belongsTo(User, { foreignKey: 'userId' });
-    Chat.associate = function(models) {
-        // Chat은 익명, 관계 없음
-    }
+  // Chat 모델과 다른 모델 간의 관계 설정
+  // 예: Chat.belongsTo(User, { foreignKey: 'userId' });
+  Chat.associate = function (models) {
+    Chat.belongsTo(models.User, {
+      foreignKey: "userId",
+      targetKey: "userId",
+      as: "user",
+    });
+  };
 
-    return Chat;
-
+  return Chat;
 };

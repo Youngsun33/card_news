@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       nickname: {
         type: DataTypes.STRING,
         allowNull: false,
-         unique: true,
+        unique: true,
       },
       //category :
     },
@@ -55,6 +55,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       sourceKey: "userId",
       as: "bookmarks",
+    });
+    User.hasMany(models.Chat, {
+      foreignKey: "userId",
+      sourceKey: "userId",
+      as: "chat",
     });
   };
 
