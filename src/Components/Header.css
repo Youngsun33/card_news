@@ -1,64 +1,80 @@
 .header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #1E3A8A;
-    height: 7rem; /* 헤더 높이 고정 */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e3a8a;
+  height: 7rem; /* 헤더 높이 고정 */
 }
 
 h1 {
-    margin: 0;
-    color: white;
-    font-size: 3.5rem;
-    font-style: italic;
-    font-family: Arial, Helvetica, sans-serif;
-    z-index: 1;
-    
+  margin: 0;
+  color: white;
+  font-size: 3.5rem;
+  font-style: italic;
+  font-family: Arial, Helvetica, sans-serif;
+  z-index: 1;
 }
 
 .weather {
-    position: absolute;
-    left: 2rem;   /* 헤더의 왼쪽에서 2rem 떨어짐 */
-    bottom: 1rem; /* 헤더의 아래쪽에서 1rem 위 */
-    color: white;
-    font-size: 1.1rem;
-    z-index: 2;
-    display: flex;
-    align-items: flex-end;
-    gap: 0.5rem;
+  position: absolute;
+  left: 2rem; /* 헤더의 왼쪽에서 2rem 떨어짐 */
+  bottom: 1rem; /* 헤더의 아래쪽에서 1rem 위 */
+  color: white;
+  font-size: 1.1rem;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
 }
 
 .weather img {
-    width: 2.5rem;
-    height: 2.5rem;
-    object-fit: contain;
-   
-    
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
 }
 
 .login {
-    position: absolute;
-    right: 2rem;
-    bottom: 1rem;
-    color: white;
-    font-size: 1.1rem;
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.login a {
+  padding: 0.1rem 0.5rem;
+  background-color: #fff;
+  color: #1e3a8a;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-left: 1rem;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.08);
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+}
+
+.login a:hover {
+  background-color: #f1f5fa;
+  color: #14306a;
 }
 
 .logout {
-    padding: 0.1rem 0.5rem;
-    background-color: #fff !important;
-    color: #1E3A8A !important;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-size: 1.1rem;
-    margin-left: 1rem;
-    box-shadow: 0 2px 8px rgba(30,58,138,0.08);
-    transition: background 0.2s, color 0.2s;
+  padding: 0.1rem 0.5rem;
+  background-color: #fff !important;
+  color: #1e3a8a !important;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-left: 1rem;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.08);
+  transition: background 0.2s, color 0.2s;
 }
 
 .logout:hover {
-    background-color: #f1f5fa !important;
-    color: #14306a !important;
+  background-color: #f1f5fa !important;
+  color: #14306a !important;
 }
