@@ -1,43 +1,50 @@
 .search-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem auto;
-    width: 100%; /* 부모 컨테이너 기준으로 정렬 */
+  width: 100%;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 600px;
+  gap: 0;
 }
 
-form {
-    display: flex;
-    width: 90%;
-    max-width: 600px;
-    margin: 0 auto; /* form도 가운데 정렬 */
-}
-
-input {
-    flex: 1;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px 0 0 5px;
-    font-size: 1rem;
-    transition: all 0.5s ease;
+.search-bar input {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0.7rem 1rem;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #2563eb;
+  font-size: 1rem;
+  height: 44px;
+  box-sizing: border-box;
+  display: block;
 }
 
 .search-bar input:focus {
-    border-color: rgb(0, 30, 255);
-    box-shadow: 0 0 0.5rem rgba(0, 123, 255, 0.5);
+  border-color: rgb(0, 30, 255);
+  box-shadow: 0 0 0.5rem rgba(0, 123, 255, 0.5);
 }
 
 .search-bar button {
-    padding: 0.5rem 1rem;
-    background-color: #1E3A8A;
-    color: white;
-    border: none;
-    border-radius: 0 0.5rem 0.5rem 0;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3 ease;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0 !important;
+  padding: 0 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  height: 44px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 70px;
+  max-width: 120px;
+  margin: 0 !important;
 }
 
 .search-bar button:hover {
-    background-color: rgb(0, 30, 255);
+  background: #1e3a8a;
 }

@@ -11,7 +11,7 @@ export default function SearchBar({setQuery}){
 
     return(
         <form className="search-bar" onSubmit={handleSubmit}>
-            <input type="text"  ref={inputElement}></input>
+            <input type="text" ref={inputElement} />
             <button type="submit">검색 🔍</button>
         </form>
     )
