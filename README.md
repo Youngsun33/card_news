@@ -136,3 +136,106 @@ npx nodemon app.js
 문의: heo4021@outlook.com
 
 ---
+
+
+
+1. React(프론트엔드) 기본 구조
+컴포넌트 분리
+
+NewsCard/News.jsx : 뉴스 하나를 카드로 보여줌(제목, 내용, 북마크 등)
+BoardDetail.jsx : 게시글 상세(글 내용, 댓글, 댓글 입력)
+BoardList.jsx : 게시글 목록(여러 글 미리보기)
+BoardWrite.jsx : 글쓰기 폼
+common/UserContext.jsx : 로그인/토큰/유저 상태 관리
+common/fetchWithAuth.js : JWT 토큰 자동 헤더 유틸
+상태 관리
+
+각 컴포넌트에서 useState로 로컬 상태(입력값, 로딩 등) 관리
+UserContext로 로그인 상태/토큰을 앱 전체에서 공유
+라우팅
+
+react-router-dom 사용: /, /board, /board/:id, /auth 등 URL에 따라 다른 컴포넌트 렌더링
+props와 state 흐름
+
+예: BoardList에서 게시글 목록을 받아서, 각 BoardPreview에 props로 전달
+부모가 자식에게 데이터/함수 전달, 자식이 이벤트 발생 시 부모에 알림
+2. API 통신 (프론트 <-> 백엔드 연결)
+fetch/axios로 데이터 주고받기
+
+예: BoardDetail.jsx에서
+→ 백엔드에서 해당 게시글 데이터(JSON) 반환
+JWT 토큰 인증
+
+fetchWithAuth.js에서
+→ 로그인한 유저만 댓글/글쓰기/북마크 가능
+비동기 처리/에러 핸들링
+
+try/catch 또는 .then().catch()로 네트워크 오류, 인증 실패 등 처리
+실패 시 alert, 성공 시 UI 갱신
+3. 인증/보안
+JWT 토큰 발급/저장/자동 로그인
+
+로그인 성공 시 백엔드가 토큰 발급 → 프론트에서 localStorage에 저장
+새로고침해도 UserContext.jsx에서 localStorage의 토큰으로 자동 로그인 시도
+로그인/회원가입/로그아웃 플로우
+
+/auth에서 로그인/회원가입 폼 → 서버에 요청 → 성공 시 토큰 저장, 실패 시 에러 표시
+로그아웃 시 토큰 삭제, 상태 초기화
+인증 필요한 요청/불필요 요청 구분
+
+글쓰기, 댓글, 북마크 등은 토큰 필요(헤더에 Authorization)
+뉴스/게시글 목록 조회 등은 토큰 없이도 가능
+4. Express(백엔드) 구조
+라우터(RESTful API)
+
+news.js, posts.js, auth.js 등에서 URL별로 API 분리
+예: /api/news, /api/posts, /api/auth/login
+컨트롤러
+
+news.js, posts.js 등에서 실제 데이터 처리(조회, 생성, 수정, 삭제)
+미들웨어
+
+auth.js : JWT 토큰 검증, 인증 필요 API에서만 사용
+모델(Sequelize)
+
+news.js, user.js, comment.js 등에서 DB 테이블 구조 정의
+5. DB/Sequelize
+모델 정의
+예: user.js(id, email, password, nickname), news.js(id, title, content, ...), comment.js(id, postId, userId, content, ...)
+관계 설정
+게시글 1:N 댓글, 유저 1:N 게시글/댓글 등
+마이그레이션/시드
+npx sequelize-cli db:migrate로 테이블 생성
+npx sequelize-cli db:seed:all로 더미 데이터 삽입
+6. UI/UX & CSS
+컴포넌트별 스타일 분리
+NewsCard/News.css, BoardDetail.css, MainPage.css 등
+다크모드/반응형
+body[data-theme="dark"]로 다크모드 스타일 적용
+UX 개선
+댓글 입력/등록 버튼 한 줄, 게시글 왼쪽 정렬, 버튼 위치 등
+7. 실행/배포/디버깅
+실행법
+프론트: npm install → npm start
+백엔드: cd src/BE → npm install → npx nodemon app.js
+디버깅
+네트워크 탭/콘솔에서 API 요청, 응답, 에러 확인
+에러 메시지(401, 500 등) 해석해서 문제 해결
+프론트와 백엔드 연결의 실제 흐름 예시
+로그인
+
+프론트에서 /auth/login으로 POST 요청(아이디/비번)
+백엔드에서 비번 확인 후 JWT 토큰 발급 → 프론트에 전달
+프론트는 토큰을 localStorage에 저장, UserContext로 앱 전체에 로그인 상태 공유
+게시글/댓글/북마크 등 인증 필요한 요청
+
+프론트에서 fetchWithAuth.js로 요청 시 헤더에 Authorization: Bearer 토큰 자동 추가
+백엔드 미들웨어(auth.js)에서 토큰 검증 → 통과 시만 데이터 처리
+데이터 조회
+
+프론트에서 fetch로 API 호출 → 백엔드에서 DB 조회 후 JSON 반환 → 프론트에서 setState로 화면 갱신
+실전 팁
+각 기능(뉴스, 게시판, 댓글, 인증 등)이 어떻게 연결되는지,
+"프론트 → API 요청 → 백엔드 → DB → 백엔드 → 프론트" 흐름을 꼭 따라가보세요.
+코드를 직접 뜯어보고, 주석 달고, 콘솔로 데이터 흐름을 찍어보면
+AI 없이도 충분히 이해하고 확장할 수 있습니다!
