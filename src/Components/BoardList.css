@@ -1,0 +1,54 @@
+/* 게시판 리스트(흰색 배경, 파란색 포인트) */
+.board-list-container {
+  background: #fff;
+  border-radius: 2.2rem;
+  box-shadow: 0 4px 24px rgba(30,58,138,0.08);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  color: #1e3a8a;
+}
+.board-list-title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 1.2rem;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 0.5rem;
+}
+.board-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+.board-list-table th, .board-list-table td {
+  padding: 1rem 0.7rem;
+  border-bottom: 1px solid #e0e7ef;
+  text-align: left;
+}
+.board-list-table th {
+  background: #f1f5fb;
+  color: #2563eb;
+  font-weight: 700;
+}
+.board-list-table tr:hover {
+  background: #f8fafc;
+}
+.board-list-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.board-list-pagination button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.board-list-pagination button.active, .board-list-pagination button:hover {
+  background: #1e3a8a;
+}

@@ -57,7 +57,7 @@ export default function Header(){
         }
         </div>
 
-        <h1>뉴스-</h1>
+        <h1 style={{cursor:'pointer'}} onClick={()=>window.location.href='/'}>뉴슥-</h1>
         <div className='login'>
           {user ? (
             <div>

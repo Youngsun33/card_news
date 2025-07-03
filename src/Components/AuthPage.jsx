@@ -54,6 +54,11 @@ export default function AuthPage() {
       }
 
       alert("회원가입이 완료되었습니다. 로그인해주세요.");
+      setMode("sign-in");
+      if (containerRef.current) {
+        containerRef.current.classList.remove("sign-up");
+        containerRef.current.classList.add("sign-in");
+      }
     } catch (err) {
       setError(err.message);
     } finally {

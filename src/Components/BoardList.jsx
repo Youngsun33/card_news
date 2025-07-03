@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "./BoardPreview.css";
+import "./BoardList.css";
 import { fetchWithAuth } from "./common/fetchWithAuth";
 import { UserContext } from "./common/UserContext";
 
@@ -18,28 +18,60 @@ export default function BoardList() {
   }, []);
 
   return (
-    <main
-      style={{
-        maxWidth: 700,
-        margin: "40px auto",
-        background: "#fff",
-        borderRadius: 12,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-        padding: "2rem 1.5rem",
-      }}
-    >
-      <h2 style={{ color: "#1E3A8A", marginBottom: 24 }}>게시판</h2>
+    <main className="board-list-container">
+      <div
+        className="board-list-title"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <span>게시판</span>
+        <div>
+          <button
+            style={{
+              background: "#2563eb",
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              padding: "0.5rem 1.2rem",
+              fontWeight: 600,
+              marginRight: 8,
+              cursor: "pointer",
+            }}
+            onClick={() => navigate(-1)}
+          >
+            &larr; 뒤로가기
+          </button>
+          <button
+            style={{
+              background: "#1e3a8a",
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              padding: "0.5rem 1.2rem",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/")}
+          >
+            메인홈
+          </button>
+        </div>
+      </div>
       {user && (
         <button
           style={{
             float: "right",
             marginBottom: 16,
-            background: "#1E3A8A",
+            background: "#2563eb",
             color: "#fff",
             border: "none",
             borderRadius: 6,
             padding: "0.5rem 1.2rem",
             cursor: "pointer",
+            fontWeight: 600,
           }}
           onClick={() => navigate("/board/new")}
         >
@@ -54,9 +86,10 @@ export default function BoardList() {
             <li
               key={post.id}
               style={{
-                borderBottom: "1px solid #eee",
+                borderBottom: "1px solid #e0e7ef",
                 padding: "1rem 0",
                 cursor: "pointer",
+                color: "#1e3a8a",
               }}
               onClick={() => navigate(`/board/${post.id}`)}
             >
@@ -66,12 +99,11 @@ export default function BoardList() {
               <div
                 style={{
                   fontSize: "0.95rem",
-                  color: "#666",
+                  color: "#2563eb",
                   marginTop: 4,
                 }}
               >
-                작성자: {post.authorNickname} |{" "}
-                {post.createdAt?.slice(0, 16)}
+                작성자: {post.authorNickname} | {post.createdAt?.slice(0, 16)}
               </div>
               <div
                 style={{

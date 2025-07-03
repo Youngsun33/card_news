@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "./BoardPreview.css";
+import "./BoardDetail.css";
 import { UserContext } from "./common/UserContext";
 
 export default function BoardDetail() {
@@ -51,28 +51,39 @@ export default function BoardDetail() {
   if (!post) return <main style={{ padding: 40, textAlign: "center" }}>게시글을 찾을 수 없습니다.</main>;
 
   return (
-    <main style={{ maxWidth: 700, margin: "40px auto", background: "#fff", borderRadius: 12, boxShadow: "0 2px 8px rgba(0,0,0,0.08)", padding: "2rem 1.5rem" }}>
-      <button style={{ marginBottom: 20, color: "#1E3A8A", background: "none", border: "none", cursor: "pointer" }} onClick={() => navigate(-1)}>&larr; 목록으로</button>
-      <h2 style={{ color: "#1E3A8A" }}>{post.title}</h2>
-      <div style={{ color: "#666", fontSize: "0.98rem", marginBottom: 8 }}>
-        작성자: {post.authorNickname} | {post.createdAt?.slice(0, 16)}
+    <main className="board-detail-container">
+      <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
+        <button
+          style={{ color: "#1E3A8A", background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}
+          onClick={() => navigate('/board')}
+        >
+          &larr; 게시판 목록
+        </button>
+        <button
+          style={{ color: "#2563eb", background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}
+          onClick={() => navigate('/')}
+        >
+          메인홈
+        </button>
       </div>
-      <div style={{ color: "#888", fontSize: "0.95rem", marginBottom: 16 }}>
+      <div className="board-detail-title">{post.title}</div>
+      <div className="board-detail-meta">
+        작성자: {post.authorNickname} | {post.createdAt?.slice(0, 16)}<br/>
         좋아요 {post.likesCount} · 댓글 {post.commentCount}
       </div>
-      <div style={{ fontSize: "1.05rem", marginBottom: 32 }}>{post.content}</div>
+      <div className="board-detail-content">{post.content}</div>
       <section style={{ marginTop: 40 }}>
-        <h3 style={{ fontSize: "1.1rem", marginBottom: 12 }}>댓글</h3>
+        <div className="board-detail-comment-title">댓글</div>
         {user && (
-          <form onSubmit={handleComment} style={{ display: 'flex', gap: 8, marginBottom: 18 }}>
-            <input value={comment} onChange={e => setComment(e.target.value)} placeholder="댓글을 입력하세요" style={{ flex: 1, padding: 8, borderRadius: 6, border: '1px solid #ccc' }} />
-            <button type="submit" disabled={commentLoading} style={{ background: '#1E3A8A', color: '#fff', border: 'none', borderRadius: 6, padding: '0.5rem 1.2rem', cursor: 'pointer' }}>등록</button>
+          <form className="board-detail-comment-form" onSubmit={handleComment}>
+            <input value={comment} onChange={e => setComment(e.target.value)} placeholder="댓글을 입력하세요" disabled={commentLoading} />
+            <button type="submit" disabled={commentLoading}>등록</button>
           </form>
         )}
-        <ul style={{ listStyle: 'none', padding: 0 }}>
+        <ul className="board-detail-comment-list">
           {comments.length === 0 && <li style={{ color: '#888' }}>아직 댓글이 없습니다.</li>}
           {comments.map(c => (
-            <li key={c.id} style={{ borderBottom: '1px solid #eee', padding: '0.7rem 0' }}>
+            <li key={c.id} className="board-detail-comment-item">
               <div style={{ fontWeight: 500 }}>{c.nickname}</div>
               <div style={{ fontSize: '1.02rem', marginTop: 2 }}>{c.content}</div>
             </li>

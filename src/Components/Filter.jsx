@@ -18,17 +18,15 @@ export default function Filter({
   const [content, setContent] = useState("");
   const { user } = useContext(UserContext);
 
-  if (!user)
-    return (
-      <main style={{ padding: 40, textAlign: "center" }}>
-        로그인 후 글쓰기가 가능합니다.
-      </main>
-    );
-
+  // 댓글은 로그인 안 해도 볼 수 있게, 작성만 막음
   const comments = comment;
 
   // 엔터 입력 시 댓글 추가
   const handleCommentKeyDown = async (e) => {
+    if (!user) {
+      alert("로그인해야 글을 쓸 수 있습니다.");
+      return;
+    }
     if (e.key === "Enter" && commentInput.trim()) {
       setComment((prev) => [...prev, commentInput.trim()]);
       setCommentInput("");
@@ -42,8 +40,7 @@ export default function Filter({
           },
         });
         const data = await res.json();
-        if (res.ok) {
-        } else {
+        if (!res.ok) {
           alert("실패: " + (data?.message || "알 수 없는 오류"));
         }
       } catch (err) {
