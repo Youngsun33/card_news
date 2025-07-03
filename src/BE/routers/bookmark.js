@@ -4,5 +4,6 @@ const bookmarkController = require("../controller/bookmark");
 const { authenticate } = require("../middlewares/auth");
 
 router.post("/:newsId", authenticate, bookmarkController.createBM);
+router.post("/toggle/:newsId", authenticate, bookmarkController.toggleBookmark);
 
 module.exports = router;

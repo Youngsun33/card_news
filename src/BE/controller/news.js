@@ -1,5 +1,13 @@
 const models = require("../models");
 
+// 정렬 기준 매핑 함수
+const getOrderBy = (sortBy) => {
+  if (!sortBy) return [["publishedAt", "DESC"]];
+  if (sortBy === "popularity") return [["likesCount", "DESC"]];
+  if (sortBy === "relevancy") return [["id", "DESC"]]; // relevancy는 임시로 id 내림차순
+  return [[sortBy, "DESC"]];
+};
+
 // 뉴스 데이터 저장 (여러 개 한 번에)
 const createNews = async (req, res) => {
   try {
@@ -28,6 +36,7 @@ const createNews = async (req, res) => {
           url: news.url,
           Kotitle: news.title_ko || null,
           Kodescription: news.description_ko || null,
+          // country, category 제거
         });
       })
     );
@@ -56,19 +65,57 @@ const getOneNews = async (req, res) => {
   const news = await models.News.findByPk(id);
   if (!news) return res.status(404).json({ message: "news not found" });
 
-  let likedByMe = false;
+  let bookmarked = false;
   if (req.user) {
-    const like = await models.Like.findOne({
-      where: { newsId: id, userId: req.user.userId },
+    const bm = await models.Bookmark.findOne({
+      where: { userId: req.user.userId, newsId: id },
     });
-    likedByMe = !!like;
+    bookmarked = !!bm;
   }
-  res
-    .status(200)
-    .json({ message: "ok", data: { ...news.toJSON(), likedByMe } });
+  res.status(200).json({ message: "ok", data: { ...news.toJSON(), bookmarked } });
+};
+
+// 헤드라인 뉴스(메인) 조회
+const getHeadlines = async (req, res) => {
+  try {
+    const { country, category, sortBy } = req.query;
+    let where = {};
+    // country, category 관련 조건 완전 제거
+    const news = await models.News.findAll({
+      order: getOrderBy(sortBy),
+      limit: 30,
+    });
+    res.json({ data: news });
+  } catch (error) {
+    res.status(500).json({ message: "서버 오류", error: error.message });
+  }
+};
+
+// 검색 뉴스 조회
+const searchNews = async (req, res) => {
+  try {
+    const { query, sortBy } = req.query;
+    if (!query) return res.json({ data: [] });
+    const { Op } = require("sequelize");
+    const news = await models.News.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${query}%` } },
+          { description: { [Op.like]: `%${query}%` } }
+        ]
+      },
+      order: getOrderBy(sortBy),
+      limit: 30,
+    });
+    res.json({ data: news });
+  } catch (error) {
+    res.status(500).json({ message: "서버 오류", error: error.message });
+  }
 };
 
 module.exports = {
   createNews,
   getOneNews,
+  getHeadlines,
+  searchNews,
 };

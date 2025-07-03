@@ -16,36 +16,49 @@ export default function UseFetchNews() {
   const [comment, setComment] = useState([]);
   const [commentInput, setCommentInput] = useState("");
 
-  const key = "6701aa49b08249b4831737b6abdc6825";
+  const [error, setError] = useState("");
 
   const findDocuments = useCallback(async () => {
     setArticles([]);
     setTranslated({});
+    setError("");
+    setIsLoading(true);
     try {
       const encodedQuery = encodeURIComponent(query.trim());
-      const endpoint = query.trim()
-        ? `https://newsapi.org/v2/everything?q=${encodedQuery}&sortBy=${sortBy}&apiKey=${key}`
-        : `https://newsapi.org/v2/top-headlines?country=${country}${
-            category ? `&category=${category}` : ""
-          }&apiKey=${key}`;
-
-      const response = await fetch(endpoint, { method: "GET" });
-      if (!response.ok)
-        throw new Error(`HTTP error! status : ${response.status}`);
-      const data = await response.json();
-
-      // 1. 외부 API 뉴스 → 서버에 저장
-      const saveRes = await fetch("http://localhost:5000/api/news", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ articles: data.articles }),
-      });
-      const saveData = await saveRes.json();
-
-      // 2. DB에서 내려준 뉴스(id 포함)로 상태 세팅
-      setArticles(saveData.data || []);
+      // 1. DB에서 먼저 검색
+      let dbUrl = query.trim()
+        ? `http://localhost:5000/api/news/search?query=${encodedQuery}`
+        : `http://localhost:5000/api/news/headlines?country=${country}${category ? `&category=${category}` : ""}`;
+      const dbRes = await fetch(dbUrl);
+      const dbData = await dbRes.json();
+      if (dbData.data && dbData.data.length > 0) {
+        setArticles(dbData.data);
+      } else {
+        // 2. DB에 없으면 외부 API에서 받아와서 저장
+        const key = "6701aa49b08249b4831737b6abdc6825";
+        const endpoint = query.trim()
+          ? `https://newsapi.org/v2/everything?q=${encodedQuery}&sortBy=${sortBy}&apiKey=${key}`
+          : `https://newsapi.org/v2/top-headlines?country=${country}${category ? `&category=${category}` : ""}&apiKey=${key}`;
+        const response = await fetch(endpoint, { method: "GET" });
+        if (!response.ok) throw new Error(`뉴스 API 오류: ${response.status}`);
+        const data = await response.json();
+        // 외부 API에서 받아온 뉴스 DB에 저장
+        const saveRes = await fetch("http://localhost:5000/api/news", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ articles: data.articles }),
+        });
+        const saveData = await saveRes.json();
+        // 저장 후 다시 DB에서 검색
+        const reDbRes = await fetch(dbUrl);
+        const reDbData = await reDbRes.json();
+        setArticles(reDbData.data || []);
+      }
     } catch (err) {
-      console.log("뉴스 로딩 중 오류 발생:", err);
+      setError(err.message || "뉴스 로딩 중 오류 발생");
+      console.log("뉴스 로딩 중 오류 발생:", err, err?.response, err?.stack);
+    } finally {
+      setIsLoading(false);
     }
   }, [query, sortBy, category, country]);
 
@@ -127,12 +140,18 @@ export default function UseFetchNews() {
           </select>
         </div>
 
-        <NewsList
-          articles={articles}
-          onTranslateToggle={handleTranslateToggle}
-          isLoading={isLoading}
-          translated={translated}
-        />
+        {isLoading ? (
+          <div>뉴스 로딩 중...</div>
+        ) : error ? (
+          <div style={{ color: "red" }}>뉴스 로딩 오류: {error}</div>
+        ) : (
+          <NewsList
+            articles={articles}
+            onTranslateToggle={handleTranslateToggle}
+            isLoading={isLoading}
+            translated={translated}
+          />
+        )}
       </section>
     </div>
   );

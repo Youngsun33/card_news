@@ -17,8 +17,8 @@ const newsRouter = require("./routers/news");
 
 // 미들웨어 설정
 app.use(logging); // 로깅 미들웨어
-app.use(express.json()); // json 파싱 미들웨어
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "2mb" })); // json 파싱 미들웨어 (용량 제한 증가)
+app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 app.use(cors());
 const uploadDir = path.join(__dirname, "public", "uploads");
 app.use("/downloads", express.static(uploadDir));
@@ -90,7 +90,7 @@ const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`서버가 http://localhost:${PORT} 에서 실행 중 입니다. `);
   models.sequelize
-    .sync({ force: false })
+    .sync({ force: false})
     .then(() => {
       console.log("DB connected");
     })

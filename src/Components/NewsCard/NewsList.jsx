@@ -21,14 +21,39 @@ export default function NewsList({
     setLikes(Array(articles.length).fill(0));
   }, [articles]);
 
-  if (!articles || articles.length === 0) {
+  // 북마크 상태 서버에서 받아오기 (404 예외처리 및 없는 뉴스id 자동 필터)
+  useEffect(() => {
+    async function fetchBookmarks() {
+      const arr = await Promise.all(
+        articles.map(async (a) => {
+          if (!a?.id) return false;
+          try {
+            const res = await fetchWithAuth(`http://localhost:5000/news/${a.id}`);
+            if (res.status === 404) return false; // 없는 뉴스는 북마크 false
+            const data = await res.json();
+            return !!data.data?.bookmarked;
+          } catch {
+            return false;
+          }
+        })
+      );
+      setBookmarked(arr);
+    }
+    if (articles.length > 0) fetchBookmarks();
+  }, [articles, currentIndex]);
+
+  // articles에서 id가 없는 뉴스 자동 필터링
+  const filteredArticles = articles.filter((a) => !!a?.id);
+  if (!filteredArticles || filteredArticles.length === 0) {
     return <div>뉴스가 없습니다.</div>;
   }
 
-  const showLeft = currentIndex > 0;
-  const showRight = currentIndex < articles.length - 1;
-  const currentArticle = articles[currentIndex];
-  const isTranslated = translated[currentIndex];
+  // currentIndex가 filteredArticles 범위 내에 있도록 보정
+  const safeIndex = Math.max(0, Math.min(currentIndex, filteredArticles.length - 1));
+  const showLeft = safeIndex > 0;
+  const showRight = safeIndex < filteredArticles.length - 1;
+  const currentArticle = filteredArticles[safeIndex];
+  const isTranslated = translated[safeIndex];
 
   // 버튼 텍스트
   let buttonText = "한글 번역";
@@ -55,7 +80,7 @@ export default function NewsList({
   const handleLike = (index) => {
     setLikes((prevLike) => {
       const newLike = [...prevLike];
-      if (typeof index === "number" && index >= 0) {
+      if (typeof index === "number" && index >= 0 && index < filteredArticles.length) {
         newLike[index] = (newLike[index] || 0) + 1;
       }
       return newLike;
@@ -63,11 +88,11 @@ export default function NewsList({
   };
 
   const handleBookmark = async (index) => {
-    const newsId = articles[index]?.id;
+    const newsId = filteredArticles[index]?.id;
     if (!newsId) return;
     try {
       const res = await fetchWithAuth(
-        `http://localhost:5000/bookmark/${newsId}`,
+        `http://localhost:5000/bookmark/toggle/${newsId}`,
         {
           method: "POST",
           headers: {
@@ -79,8 +104,8 @@ export default function NewsList({
       if (res.ok) {
         setBookmarked((prev) => {
           const newBookmark = [...prev];
-          if (typeof index === "number" && index >= 0) {
-            newBookmark[index] = !prev[index];
+          if (typeof index === "number" && index >= 0 && index < filteredArticles.length) {
+            newBookmark[index] = !!data.bookmarked;
           }
           return newBookmark;
         });
@@ -93,11 +118,12 @@ export default function NewsList({
     }
   };
 
+  // News 컴포넌트에 filteredArticles, safeIndex 적용
   return (
     <div>
       <button
         className="translate-btn"
-        onClick={() => onTranslateToggle(currentIndex)}
+        onClick={() => onTranslateToggle(safeIndex)}
         disabled={isButtonDisabled}
       >
         {buttonText}
@@ -106,15 +132,15 @@ export default function NewsList({
       <div className="card-wrapper">
         <div className="card-left">
           {showRight && (
-            <div onClick={() => setCurrentIndex(currentIndex + 1)}>
+            <div onClick={() => setCurrentIndex(safeIndex + 1)}>
               <News
-                article={articles[currentIndex + 1]}
-                like={likes[currentIndex + 1]}
-                onLike={() => handleLike(currentIndex + 1)}
+                article={filteredArticles[safeIndex + 1]}
+                like={likes[safeIndex + 1]}
+                onLike={() => handleLike(safeIndex + 1)}
                 onBookmark={() => {
-                  handleBookmark(currentIndex + 1);
+                  handleBookmark(safeIndex + 1);
                 }}
-                Bookmarked={bookmarked[currentIndex + 1]}
+                Bookmarked={bookmarked[safeIndex + 1]}
               />
             </div>
           )}
@@ -123,30 +149,30 @@ export default function NewsList({
         <div className="card-center">
           <News
             article={displayArticle}
-            like={likes[currentIndex]}
+            like={likes[safeIndex]}
             onLike={() => {
-              handleLike(currentIndex);
+              handleLike(safeIndex);
             }}
             onBookmark={() => {
-              handleBookmark(currentIndex);
+              handleBookmark(safeIndex);
             }}
-            Bookmarked={bookmarked[currentIndex]}
+            Bookmarked={bookmarked[safeIndex]}
           />
         </div>
 
         <div className="card-right">
           {showLeft && (
-            <div onClick={() => setCurrentIndex(currentIndex - 1)}>
+            <div onClick={() => setCurrentIndex(safeIndex - 1)}>
               <News
-                article={articles[currentIndex - 1]}
-                like={likes[currentIndex - 1]}
+                article={filteredArticles[safeIndex - 1]}
+                like={likes[safeIndex - 1]}
                 onLike={() => {
-                  handleLike(currentIndex - 1);
+                  handleLike(safeIndex - 1);
                 }}
                 onBookmark={() => {
-                  handleBookmark(currentIndex - 1);
+                  handleBookmark(safeIndex - 1);
                 }}
-                Bookmarked={bookmarked[currentIndex - 1]}
+                Bookmarked={bookmarked[safeIndex - 1]}
               />
             </div>
           )}
