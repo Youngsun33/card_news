@@ -11,6 +11,14 @@ const createBM = async (req, res) => {
       return res.status(404).json({ message: "뉴스가 존재하지 않습니다." });
     }
 
+    // 이미 북마크된 경우 체크
+    const exists = await models.Bookmark.findOne({
+      where: { userId: req.user.userId, newsId: req.params.newsId },
+    });
+    if (exists) {
+      return res.status(409).json({ message: "이미 북마크한 뉴스입니다." });
+    }
+
     const bookmark = await models.Bookmark.create({
       userId: req.user.userId,
       newsId: req.params.newsId,
