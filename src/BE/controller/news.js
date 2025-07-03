@@ -5,7 +5,9 @@ const createNews = async (req, res) => {
   try {
     const newsArray = req.body.articles; // 프론트에서 articles 배열로 보낸다고 가정
     if (!Array.isArray(newsArray) || newsArray.length === 0) {
-      return res.status(400).json({ message: "저장할 뉴스 데이터가 없습니다." });
+      return res
+        .status(400)
+        .json({ message: "저장할 뉴스 데이터가 없습니다." });
     }
 
     let duplicateCount = 0;
@@ -33,9 +35,14 @@ const createNews = async (req, res) => {
     // null(중복) 제거
     const filteredNews = createdNews.filter((item) => item !== null);
 
-    res.status(201).json({ 
-      message: `뉴스 저장 완료 (중복: ${duplicateCount}건 제외)`, 
-      data: filteredNews 
+    // 뉴스 저장 후 전체 뉴스 리스트를 DB에서 조회
+    const allNews = await models.News.findAll({
+      order: [["publishedAt", "DESC"]],
+    });
+
+    res.status(201).json({
+      message: `뉴스 저장 완료 (중복: ${duplicateCount}건 제외)`,
+      data: allNews, // 전체 뉴스 리스트로 응답
     });
   } catch (error) {
     console.error("뉴스 저장 오류:", error);
@@ -51,10 +58,14 @@ const getOneNews = async (req, res) => {
 
   let likedByMe = false;
   if (req.user) {
-    const like = await models.Like.findOne({ where: { newsId: id, userId: req.user.userId } });
+    const like = await models.Like.findOne({
+      where: { newsId: id, userId: req.user.userId },
+    });
     likedByMe = !!like;
   }
-  res.status(200).json({ message: "ok", data: { ...news.toJSON(), likedByMe } });
+  res
+    .status(200)
+    .json({ message: "ok", data: { ...news.toJSON(), likedByMe } });
 };
 
 module.exports = {

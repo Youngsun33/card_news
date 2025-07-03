@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# 뉴스 카드 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+이 프로젝트는 최신 뉴스를 카드 형태로 보여주는 웹 애플리케이션입니다. 프론트엔드는 React, 백엔드는 Node.js(Express)를 사용합니다.
 
-## Available Scripts
+## 주요 기능
 
-In the project directory, you can run:
+- 뉴스 기사 목록 및 상세 정보 표시
+- 기사 북마크 및 좋아요 기능 (프론트/백엔드 연동)
+- 기사 요약 및 더보기/접기 버튼
+- 최신 기사 NEW 뱃지 표시
+- 작성자, 발행일, 이미지 등 기사 정보 제공
 
-### `npm start`
+## 폴더 구조
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+src/
+  Components/
+    NewsCard/
+      News.jsx        // 뉴스 카드 컴포넌트 (기사 UI, 좋아요/북마크 버튼 등)
+      News.css        // 뉴스 카드 스타일
+    ...기타 컴포넌트 (게시판, 검색, 테마 등)
+  BE/                // 백엔드 코드 (Node.js, Express)
+    app.js           // 서버 진입점
+    controller/      // 각종 API 컨트롤러 (news, bookmark, likes 등)
+    routers/         // 라우터 분리 (RESTful API)
+    models/          // DB 모델 (Sequelize 기반)
+    middlewares/     // 인증, 로깅 등 미들웨어
+    config/          // DB 설정
+    utlis/           // 토큰, 유효성 검사 등 유틸
+public/               // 정적 파일 및 이미지 (북마크, 하트, 기본 이미지 등)
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 프론트엔드 상세
 
-### `npm test`
+- **주요 라이브러리**: React, React Router, Context API
+- **컴포넌트**: 뉴스 카드, 뉴스 리스트, 북마크, 게시판, 검색바, 테마 버튼 등
+- **상태 관리**: useState, useContext, 커스텀 훅(UseFetchNews 등)
+- **기능**:
+  - 뉴스 목록/상세/검색/필터링
+  - 좋아요/북마크(아이콘 클릭 시 백엔드와 연동)
+  - 반응형 UI, 다크모드 지원
+  - 이미지 미제공 시 기본 이미지 출력
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 백엔드 상세
 
-### `npm run build`
+- **주요 라이브러리**: Express, Sequelize, sqlite3
+- **API**:
+  - `/news` : 뉴스 목록/상세/검색/필터
+  - `/bookmark` : 북마크 추가/삭제/조회
+  - `/likes` : 좋아요 추가/삭제/조회
+  - `/users`, `/auth` : 회원가입, 로그인, 인증
+- **DB**: SQLite (Sequelize ORM 사용)
+- **기능**:
+  - RESTful API 제공 (프론트와 연동)
+  - JWT 기반 인증/인가
+  - 게시글, 댓글, 신고 등 확장 가능
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 실행 방법
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. 의존성 설치
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm install bcryptjs  express joi jsonwebtoken  multer  nodemon sequelize sequelize-cli  sqlite3 winston
+```
 
-### `npm run eject`
+2. 프론트엔드 개발 서버 실행
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. 백엔드 서버 실행 (별도 터미널)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+cd src/BE
+npm install
+npx nodemon app.js
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 기타
 
-## Learn More
+- 기사 이미지가 없을 경우 기본 이미지(`no-photo.png`)가 표시됩니다.
+- 북마크/좋아요 이미지는 public 폴더에 있습니다.
+- 환경변수, API 키 등은 별도 관리 필요
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+문의: sun@예시.com
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---

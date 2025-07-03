@@ -3,47 +3,38 @@ module.exports = (sequelize, DataTypes) => {
     "Bookmark",
     {
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       newsId: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      postId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
     },
     {
       tableName: "bookmarks",
-      timestamps: false,
+      timestamps: true,
       indexes: [
         {
           unique: true,
           fields: ["userId", "newsId"],
         },
-        {
-          unique: true,
-          fields: ["userId", "postId"],
-        },
       ],
     }
   );
   // Bookmark 모델과 다른 모델 간의 관계 설정
-  Bookmark.associate = function(models) {
+  Bookmark.associate = function (models) {
     Bookmark.belongsTo(models.User, {
       foreignKey: "userId",
+      targetKey: "userId",
+      onDelete: "CASCADE",
       as: "user",
     });
     Bookmark.belongsTo(models.News, {
       foreignKey: "newsId",
+      targetKey: "id",
+      onDelete: "CASCADE",
       as: "news",
-      constraints: false,
-    });
-    Bookmark.belongsTo(models.Post, {
-      foreignKey: "postId",
-      as: "post",
       constraints: false,
     });
   };

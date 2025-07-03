@@ -1,3 +1,5 @@
+const bookmark = require("./bookmark");
+
 module.exports = (sequelize, DataTypes) => {
   const News = sequelize.define(
     "News",

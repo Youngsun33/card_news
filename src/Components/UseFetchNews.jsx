@@ -33,7 +33,17 @@ export default function UseFetchNews() {
       if (!response.ok)
         throw new Error(`HTTP error! status : ${response.status}`);
       const data = await response.json();
-      setArticles(data.articles);
+
+      // 1. 외부 API 뉴스 → 서버에 저장
+      const saveRes = await fetch("http://localhost:5000/api/news", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ articles: data.articles }),
+      });
+      const saveData = await saveRes.json();
+
+      // 2. DB에서 내려준 뉴스(id 포함)로 상태 세팅
+      setArticles(saveData.data || []);
     } catch (err) {
       console.log("뉴스 로딩 중 오류 발생:", err);
     }
@@ -84,23 +94,6 @@ export default function UseFetchNews() {
     // 번역 상태로 토글
     setTranslated((prev) => ({ ...prev, [index]: true }));
   };
-
-  useEffect(() => {
-    if (articles.length > 0) {
-      fetch("http://localhost:5000/api/news", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ articles }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("뉴스 DB 저장 결과:", data);
-        })
-        .catch((err) => {
-          console.error("뉴스 DB 저장 실패:", err);
-        });
-    }
-  }, [articles]);
 
   return (
     <div className="main-layout">

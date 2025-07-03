@@ -8,7 +8,7 @@ export default function News({
   onBookmark,
   Bookmarked,
 }) {
-  const { author, title, description, url, urlToImage, publishedAt } = article;
+  const { author, title, description, url, image, publishedAt } = article;
   const [expanded, setExpanded] = useState(false);
 
   const today = new Date();
@@ -31,11 +31,11 @@ export default function News({
           {title}
           {isNew && <span className="new-badge">NEW!</span>}
         </h2>
-        <p className="author">{author}</p>
+        <p className="author">{author ? author : "작성자 미상"}</p>
         <p className="publishedAt">{publishedAt?.split("T")[0]}</p>
       </div>
       <img
-        src={urlToImage ? urlToImage : process.env.PUBLIC_URL + "/no-photo.png"}
+        src={image ? image : process.env.PUBLIC_URL + "/no-photo.png"}
         alt="기사 사진을 제공하지 않습니다"
       />
       <p>
