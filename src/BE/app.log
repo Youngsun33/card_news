@@ -940,3 +940,12 @@ info: POST / - 201 (29ms) {"timestamp":"2025-07-03T07:21:02.067Z"}
 info: POST / - 201 (26ms) {"timestamp":"2025-07-03T07:21:02.293Z"}
 info: OPTIONS /bookmark/29 - 204 (0ms) {"timestamp":"2025-07-03T07:21:03.517Z"}
 info: POST /29 - 200 (14ms) {"timestamp":"2025-07-03T07:21:03.532Z"}
+info: OPTIONS /auth/me - 204 (2ms) {"timestamp":"2025-07-03T07:30:05.202Z"}
+info: OPTIONS /auth/me - 204 (0ms) {"timestamp":"2025-07-03T07:30:05.208Z"}
+info: GET /me - 304 (12ms) {"timestamp":"2025-07-03T07:30:05.215Z"}
+info: GET / - 304 (7ms) {"timestamp":"2025-07-03T07:30:05.216Z"}
+info: GET /me - 304 (2ms) {"timestamp":"2025-07-03T07:30:05.218Z"}
+info: GET / - 304 (2ms) {"timestamp":"2025-07-03T07:30:05.219Z"}
+info: OPTIONS /api/news - 204 (0ms) {"timestamp":"2025-07-03T07:30:06.258Z"}
+info: POST / - 201 (14ms) {"timestamp":"2025-07-03T07:30:06.272Z"}
+info: POST / - 201 (30ms) {"timestamp":"2025-07-03T07:30:06.521Z"}

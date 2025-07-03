@@ -85,6 +85,6 @@ npx nodemon app.js
 
 ---
 
-문의: sun@예시.com
+문의: heo4021@outlook.com
 
 ---
