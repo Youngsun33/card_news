@@ -73,12 +73,12 @@ body[data-theme="light"] .news-item {
 
 /* 다크 모드 */
 body[data-theme="dark"] {
-  background-color: #121212;
+  background-color: #232222;
   color: #f1f1f1;
 }
 
 body[data-theme="dark"] .news-item {
-  background-color: #1e1e1e;
+  background-color: #2e2e2e;
   border-color: #444;
   color: #ffffff;
 }
@@ -124,7 +124,8 @@ body[data-theme="dark"] .translate-btn:disabled {
 }
 
 body[data-theme="dark"] .search-bar input {
-  background-color: #121212;
+  background-color: #3a3b3c;
+  border-color: #444;
   color: white;
 }
 
@@ -180,4 +181,23 @@ body[data-theme="dark"] .comment {
 body[data-theme="dark"] .comment-input {
   background-color: #23272f;
   color: #f1f1f1;
+}
+
+body[data-theme="dark"] .board-preview {
+  background-color: #353434;
+  border-color: #444;
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .board-header h3 {
+  color: #ffffff;
+}
+
+body[data-theme="dark"] .more-btn {
+  color: #ffffff;
+  background-color: #444;
+}
+
+body[data-theme="dark"] .preview-item {
+  color: #ffffff;
 }

@@ -42,6 +42,10 @@ ul {
   border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
   transition: background 0.15s;
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin-bottom: 4;
+  color: #1e3a8a;
 }
 .preview-item:last-child {
   border-bottom: none;
