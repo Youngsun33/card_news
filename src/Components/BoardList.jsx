@@ -1,3 +1,6 @@
+// 게시글 목록 페이지 컴포넌트
+// 게시판의 모든 게시글을 리스트로 보여줍니다.
+
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./BoardList.css";

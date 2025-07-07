@@ -1,3 +1,6 @@
+// Joi를 이용한 회원가입 등 데이터 유효성 검사 스키마 정의
+// 입력값 검증을 위한 스키마와 에러 메시지를 정의합니다.
+
 const Joi = require("joi"); // 데이터 유효성 검사도구 불러오기
 
 const registerSchema = Joi.object({

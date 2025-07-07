@@ -1,3 +1,6 @@
+// Sequelize를 통한 DB 모델 자동 로딩 및 연결
+// models 폴더 내 모든 모델을 자동으로 불러와 DB와 연결합니다.
+
 // 필요한 모듈 임포트
 const fs = require("fs");
 const path = require("path");

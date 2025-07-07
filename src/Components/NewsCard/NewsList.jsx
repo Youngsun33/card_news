@@ -1,3 +1,9 @@
+// 뉴스 카드 리스트 컴포넌트
+// 여러 뉴스 기사 카드를 슬라이드/리스트 형태로 보여줍니다.
+// 각 뉴스 카드는 제목, 설명, 이미지, 출처, 발행일 정보를 포함합니다.
+// 뉴스 기사는 번역 버튼 클릭 시 한글/원문으로 전환 가능합니다.
+// 좋아요 및 북마크 기능이 있으며, 상태는 서버와 동기화됩니다.
+
 import { useState, useEffect } from "react";
 import News from "./News";
 import "./NewsList.css";
@@ -28,7 +34,9 @@ export default function NewsList({
         articles.map(async (a) => {
           if (!a?.id) return false;
           try {
-            const res = await fetchWithAuth(`http://localhost:5000/news/${a.id}`);
+            const res = await fetchWithAuth(
+              `http://localhost:5000/news/${a.id}`
+            );
             if (res.status === 404) return false; // 없는 뉴스는 북마크 false
             const data = await res.json();
             return !!data.data?.bookmarked;
@@ -49,7 +57,10 @@ export default function NewsList({
   }
 
   // currentIndex가 filteredArticles 범위 내에 있도록 보정
-  const safeIndex = Math.max(0, Math.min(currentIndex, filteredArticles.length - 1));
+  const safeIndex = Math.max(
+    0,
+    Math.min(currentIndex, filteredArticles.length - 1)
+  );
   const showLeft = safeIndex > 0;
   const showRight = safeIndex < filteredArticles.length - 1;
   const currentArticle = filteredArticles[safeIndex];
@@ -80,7 +91,11 @@ export default function NewsList({
   const handleLike = (index) => {
     setLikes((prevLike) => {
       const newLike = [...prevLike];
-      if (typeof index === "number" && index >= 0 && index < filteredArticles.length) {
+      if (
+        typeof index === "number" &&
+        index >= 0 &&
+        index < filteredArticles.length
+      ) {
         newLike[index] = (newLike[index] || 0) + 1;
       }
       return newLike;
@@ -104,7 +119,11 @@ export default function NewsList({
       if (res.ok) {
         setBookmarked((prev) => {
           const newBookmark = [...prev];
-          if (typeof index === "number" && index >= 0 && index < filteredArticles.length) {
+          if (
+            typeof index === "number" &&
+            index >= 0 &&
+            index < filteredArticles.length
+          ) {
             newBookmark[index] = !!data.bookmarked;
           }
           return newBookmark;

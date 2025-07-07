@@ -1,3 +1,6 @@
+// 사용자(User) 관련 컨트롤러
+// 회원 정보 조회, 수정, 삭제 등 사용자 관리 기능을 담당합니다.
+
 const models = require("../models");
 const bcrypt = require("bcryptjs");
 

@@ -1,3 +1,6 @@
+// 뉴스(News) 관련 컨트롤러
+// 뉴스 데이터 저장, 조회, 검색 등 뉴스 관련 기능을 담당합니다.
+
 const models = require("../models");
 
 // 정렬 기준 매핑 함수
@@ -72,7 +75,9 @@ const getOneNews = async (req, res) => {
     });
     bookmarked = !!bm;
   }
-  res.status(200).json({ message: "ok", data: { ...news.toJSON(), bookmarked } });
+  res
+    .status(200)
+    .json({ message: "ok", data: { ...news.toJSON(), bookmarked } });
 };
 
 // 헤드라인 뉴스(메인) 조회
@@ -101,8 +106,8 @@ const searchNews = async (req, res) => {
       where: {
         [Op.or]: [
           { title: { [Op.like]: `%${query}%` } },
-          { description: { [Op.like]: `%${query}%` } }
-        ]
+          { description: { [Op.like]: `%${query}%` } },
+        ],
       },
       order: getOrderBy(sortBy),
       limit: 30,

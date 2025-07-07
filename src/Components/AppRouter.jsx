@@ -1,3 +1,6 @@
+// 전체 라우팅 관리 컴포넌트
+// 각 페이지별 경로와 컴포넌트 매핑을 담당합니다.
+
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./common/MainPage";

@@ -4,6 +4,9 @@ import { fetchWithAuth } from "./common/fetchWithAuth";
 import { UserContext } from "./common/UserContext";
 import "./BoardWrite.css";
 
+// 게시글 작성 페이지 컴포넌트
+// 사용자가 게시글을 작성할 수 있는 폼을 제공합니다.
+
 export default function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");

@@ -1,3 +1,6 @@
+// 뉴스 데이터 fetch 및 상태 관리 커스텀 훅/컴포넌트
+// 뉴스 목록, 번역, 정렬, 필터 등 주요 로직을 담당합니다.
+
 import { useState, useCallback, useEffect } from "react";
 import NewsList from "./NewsCard/NewsList";
 import SearchBar from "./common/SearchBar";
@@ -28,7 +31,9 @@ export default function UseFetchNews() {
       // 1. DB에서 먼저 검색
       let dbUrl = query.trim()
         ? `http://localhost:5000/api/news/search?query=${encodedQuery}`
-        : `http://localhost:5000/api/news/headlines?country=${country}${category ? `&category=${category}` : ""}`;
+        : `http://localhost:5000/api/news/headlines?country=${country}${
+            category ? `&category=${category}` : ""
+          }`;
       const dbRes = await fetch(dbUrl);
       const dbData = await dbRes.json();
       if (dbData.data && dbData.data.length > 0) {
@@ -38,7 +43,9 @@ export default function UseFetchNews() {
         const key = "6701aa49b08249b4831737b6abdc6825";
         const endpoint = query.trim()
           ? `https://newsapi.org/v2/everything?q=${encodedQuery}&sortBy=${sortBy}&apiKey=${key}`
-          : `https://newsapi.org/v2/top-headlines?country=${country}${category ? `&category=${category}` : ""}&apiKey=${key}`;
+          : `https://newsapi.org/v2/top-headlines?country=${country}${
+              category ? `&category=${category}` : ""
+            }&apiKey=${key}`;
         const response = await fetch(endpoint, { method: "GET" });
         if (!response.ok) throw new Error(`뉴스 API 오류: ${response.status}`);
         const data = await response.json();

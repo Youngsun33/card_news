@@ -1,3 +1,6 @@
+// 채팅(Chat) 관련 컨트롤러
+// 채팅 메시지 저장 및 조회 기능을 담당합니다.
+
 const models = require("../models");
 
 const createChat = async (req, res) => {

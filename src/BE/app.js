@@ -1,3 +1,6 @@
+// 메인 서버 파일 (Express 앱 설정)
+// 각종 라우터, 미들웨어, DB 연결 등 서버 전체 동작을 담당합니다.
+
 const path = require("path");
 const express = require("express");
 const cors = require("cors");

@@ -1,3 +1,6 @@
+// 북마크 관련 컨트롤러 (뉴스 북마크 추가/해제 등)
+// 사용자의 뉴스 북마크 추가, 해제, 조회 기능을 담당합니다.
+
 const models = require("../models");
 
 const createBM = async (req, res) => {
@@ -44,14 +47,18 @@ const toggleBookmark = async (req, res) => {
     if (exists) {
       // 이미 북마크된 경우 해제
       await exists.destroy();
-      return res.status(200).json({ message: "북마크 해제됨", bookmarked: false });
+      return res
+        .status(200)
+        .json({ message: "북마크 해제됨", bookmarked: false });
     } else {
       // 북마크가 없으면 생성
       const bookmark = await models.Bookmark.create({
         userId: req.user.userId,
         newsId: req.params.newsId,
       });
-      return res.status(200).json({ message: "북마크 추가됨", bookmarked: true, data: bookmark });
+      return res
+        .status(200)
+        .json({ message: "북마크 추가됨", bookmarked: true, data: bookmark });
     }
   } catch (err) {
     res.status(500).json({ message: "server error", error: err.message });

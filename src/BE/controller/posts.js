@@ -1,3 +1,6 @@
+// 게시글 및 댓글 관련 컨트롤러 (CRUD, 댓글 등)
+// 게시글 작성, 조회, 수정, 삭제와 댓글 관련 기능을 담당합니다.
+
 const models = require("../models");
 
 const createPost = async (req, res) => {
@@ -40,10 +43,14 @@ const getOnePost = async (req, res) => {
 
   let likedByMe = false;
   if (req.user) {
-    const like = await models.Like.findOne({ where: { postId: id, userId: req.user.userId } });
+    const like = await models.Like.findOne({
+      where: { postId: id, userId: req.user.userId },
+    });
     likedByMe = !!like;
   }
-  res.status(200).json({ message: "ok", data: { ...post.toJSON(), likedByMe } });
+  res
+    .status(200)
+    .json({ message: "ok", data: { ...post.toJSON(), likedByMe } });
 };
 
 //업데이트
@@ -77,7 +84,7 @@ const createComment = async (req, res) => {
     return res.status(401).json({ message: "인증 정보가 없습니다." });
   }
   // 디버깅용 로그
-  console.log('req.user:', req.user);
+  console.log("req.user:", req.user);
   const postId = req.params.postId;
   const { content } = req.body;
   // 1. 게시물이 존재여부 체크
@@ -89,8 +96,8 @@ const createComment = async (req, res) => {
   const comment = await models.Comment.create({
     content: content,
     postId: postId,
-    userId: req.user.userId,      // userId는 문자열
-    nickname: req.user.nickname,  // nickname도 저장
+    userId: req.user.userId, // userId는 문자열
+    nickname: req.user.nickname, // nickname도 저장
   });
   res.status(201).json({ message: "ok", data: comment });
 };
@@ -101,7 +108,11 @@ const findComments = async (req, res) => {
   const comments = await models.Comment.findAll({
     where: { postId: postId },
     include: [
-      { model: models.User, as: "author", attributes: ["userId", "nickname", "name"] },
+      {
+        model: models.User,
+        as: "author",
+        attributes: ["userId", "nickname", "name"],
+      },
     ],
     order: [["createdAt", "DESC"]],
   });

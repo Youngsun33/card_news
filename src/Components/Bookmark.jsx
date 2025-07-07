@@ -1,3 +1,6 @@
+// 북마크 페이지 컴포넌트
+// 사용자가 북마크한 뉴스 목록을 보여줍니다.
+
 import React from "react";
 import "./Bookmark.css";
 

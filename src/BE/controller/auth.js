@@ -1,3 +1,6 @@
+// 인증(회원가입/로그인) 관련 컨트롤러
+// 회원가입, 로그인, 내 정보 조회 등 인증 기능을 담당합니다.
+
 const models = require("../models");
 const bcrypt = require("bcryptjs");
 const { generateAccessToken } = require("../utlis/token");

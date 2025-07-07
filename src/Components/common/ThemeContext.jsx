@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
+// 다크/라이트 테마 전역 관리 Context
+// 테마 상태와 토글 함수를 제공합니다.
 // 전역에서 Context 객체 생성
 export const ThemeContext = createContext();
 

@@ -1,3 +1,6 @@
+// 뉴스 카드 단일 컴포넌트
+// 뉴스 기사 하나의 정보를 카드 형태로 렌더링합니다.
+
 import { useState } from "react";
 import "./News.css";
 

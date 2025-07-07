@@ -1,3 +1,7 @@
+// 번역 API 서버 예시 코드 (Express)
+// 프론트엔드 개발용 번역 테스트 서버입니다.
+// 실제 서비스에서는 보안 및 성능을 고려하여 적절한 조치를 취해야 합니다.
+
 const express = require("express");
 const cors = require("cors");
 

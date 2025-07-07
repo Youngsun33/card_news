@@ -1,3 +1,6 @@
+// 메인 페이지 레이아웃 컴포넌트
+// 뉴스, 게시판, 필터 등 메인 화면 전체를 구성합니다.
+
 import { ThemeProvider } from "./ThemeContext";
 import ThemeButton from "./ThemeButton";
 import UseFetchNews from "../UseFetchNews";

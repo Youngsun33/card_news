@@ -1,3 +1,5 @@
+// 파일 업로드 미들웨어 (multer 사용)
+// 이미지 등 파일 업로드를 처리하는 미들웨어입니다.
 // 업로드 관련 미들웨어
 const multer = require("multer");
 const path = require("path");

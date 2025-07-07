@@ -1,3 +1,6 @@
+// 뉴스/게시글 필터 및 댓글 입력 컴포넌트
+// 국가, 카테고리 필터와 댓글 입력 기능을 제공합니다.
+
 import React, { useState, useContext } from "react";
 import "./Filter.css";
 import { UserContext } from "./common/UserContext";

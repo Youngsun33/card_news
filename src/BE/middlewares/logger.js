@@ -1,3 +1,6 @@
+// 요청/응답 로깅 미들웨어 (winston 사용)
+// 모든 요청과 응답을 로그로 남겨 디버깅 및 운영에 활용합니다.
+
 const winston = require("winston");
 
 const logger = winston.createLogger({
